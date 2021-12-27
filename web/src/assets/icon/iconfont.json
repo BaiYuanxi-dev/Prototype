@@ -1,0 +1,23 @@
+{
+  "id": "3078292",
+  "name": "webwork",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-user",
+  "description": "大作业",
+  "glyphs": [
+    {
+      "icon_id": "1727459",
+      "name": "224用户",
+      "font_class": "yonghu",
+      "unicode": "e8c8",
+      "unicode_decimal": 59592
+    },
+    {
+      "icon_id": "6446244",
+      "name": "密码（关）",
+      "font_class": "tianchongxing-",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    }
+  ]
+}
