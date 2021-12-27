@@ -11,3 +11,4 @@
 ### 数据库配置
 * 创建server/src/config.js，在该文件中填写分配给各组的数据库 host、port、password
 
+### 修改测试github分枝
