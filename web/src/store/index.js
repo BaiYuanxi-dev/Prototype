@@ -31,7 +31,6 @@ export default new Vuex.Store({
             
         },
         setRegist(state, message){
-            // console.log(message);
             if(message == "ok"){
                 state.regist = 200;
             } else if (message == "exist username"){
@@ -85,7 +84,6 @@ export default new Vuex.Store({
             // state.text = value.text[0].text;
         },
         addPage(state, value) {
-            console.log("ADDpAGE", value);
             if (value.createdAt == null) {
                 value.createdAt = "时间未记录"
             } else {
@@ -98,11 +96,22 @@ export default new Vuex.Store({
             }
             state.pagesList.push(value);
         },
+        changePage(state, value){
+            for (let i = 0; i < state.pagesList.length; i++) {
+                if (state.pagesList[i].pageId == value.pageId) {
+                    state.pagesList.splice(i, 1, value);
+                }
+            }
+        },
+
+
         setLayers(state, value) {
             // state.layers = layers;
+            console.log(value.data);
+            // console.log(value.ids);
             let len = value.data.length;
             for (let i = 0; i < len; i++) {
-                state.layers.push(value.data[i][0]);
+                state.layers.push(value.data[i]);
             }
             len = value.ids.length;
             for (let i = 0; i < len; i++) {
@@ -176,8 +185,6 @@ export default new Vuex.Store({
 
 
 
-
-
         /**
          * 请求该页面的所有page
          */
@@ -200,12 +207,16 @@ export default new Vuex.Store({
                 context.commit('addPage', value.data[value.data.length - 1]);
             }
         },
-        async updatePages(context, payload) {
+        async updatePage(context, payload) {
             const value = await reqInstance.post(`/pages/update`, {
-                id: payload.id,
-                title: payload.title,
+                pageId: payload.pageId,
+                pageText: payload.pageText,
+                projectId: payload.projectId,
             });
-            await context.dispatch('requestProjects');
+            if (value.message == "ok") {
+                context.commit('changePage', value.data[0]);
+            }
+            
         },
         async deletePage(context, payload) {
             console.log("delete", payload.pageId, payload.projectId);
@@ -217,21 +228,24 @@ export default new Vuex.Store({
 
 
 
-        // async updateText(context, payload) {
-        //     const value = await reqInstance.post(`/projects/updateText`, {
-        //         id: payload.id,
-        //         // text: payload.text,
-        //     });
-        // },
+
 
         async requestLayers(context, payload) {
-            let value = await reqInstance.get(`/layers/${payload.pageId}`);
+            let value = await reqInstance.post(`/layers/getLayer`, {
+                pageId: payload.pageId,
+                projectId: payload.projectId,
+                username:payload.username,
+            });
             await context.commit('setLayers', value);
         },
 
+
+
         async addGraph(context, payload) {
+            console.log(payload);
             await reqInstance.post('/layers/addGraph', {
                 pageId: payload.pageId,
+                projectId: payload.projectId,
                 rect: payload.arr
             });
         },

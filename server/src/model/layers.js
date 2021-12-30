@@ -9,6 +9,20 @@ export const Layers = dbInstance.define('layers', {
             type: sequelize.DataTypes.STRING,
             allowNull: false,
         },
+        pageId:{
+            name: 'pageId',
+            primaryKey: true,
+            type: sequelize.DataTypes.INTEGER,
+        },
+        projectId:{
+            name: 'projectId',
+            primaryKey: true,
+            type: sequelize.DataTypes.INTEGER,
+        },
+        username:{
+            name: 'username',
+            type: sequelize.DataTypes.STRING,
+        },
         align: {
             name: 'align',
             type: sequelize.DataTypes.STRING,

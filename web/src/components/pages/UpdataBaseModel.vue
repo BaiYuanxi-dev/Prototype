@@ -1,9 +1,9 @@
 <template>
   <el-dialog title="更新"  width="400px" visible @close="handleCancel">
     <el-form :model="initForm">
-      <el-form-item label="页号:" class="update-form-item">
+      <!-- <el-form-item label="页号:" class="update-form-item">
         <el-input v-model="initForm.pageId" class="form-input" size="small"/>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="简介:" class="update-form-item">
         <el-input v-model="initForm.pageText" class="form-input" size="small"/>
       </el-form-item>
@@ -38,6 +38,7 @@ export default {
       initForm: {
         pageId: -1,
         pageText: '',
+        projectId:-1,
       }
     }
   },

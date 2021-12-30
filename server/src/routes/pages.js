@@ -41,14 +41,15 @@ pageRoute.post('/add', async function(ctx) {
 pageRoute.post('/update', async function(ctx) {
     // const id = Number(ctx.params.id);
     const payload = ctx.request.body;
-    if (isNaN(id)) {
+    if (isNaN(payload.pageId)) {
         ctx.statusCode = 400;
         ctx.body = {
             message: 'id must be number',
         };
     } else { 
-        await new PagesController().updatePages(payload);
+        const data = await new PagesController().updatePages(payload);
         ctx.body = {
+            data,
             message: 'ok'
         }
     }

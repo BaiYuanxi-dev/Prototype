@@ -1,17 +1,18 @@
 import KoaRouter from 'koa-router';
-// import {
-//     LayersController
-// } from '../controllers/layers';
+import {
+    LayersController
+} from '../controllers/layers';
 const layerRoute = new KoaRouter({
     prefix: '/api/layers'
 });
 
 
 // 获取指定页面的所有图层
-layerRoute.get('/:pageId', async function (ctx) {
-    const pageId = Number(ctx.params.pageId);
-    const data = await new LayersController().initialLayers(pageId);
-    const ids = await new LayersController().getIds(pageId);
+layerRoute.post('/getLayer', async function (ctx) {
+    const payload = ctx.request.body;
+    // const pageId = Number(ctx.params.pageId);
+    const data = await new LayersController().initialLayers(payload);
+    const ids = await new LayersController().getIds(payload);
     ctx.body = {
         data,
         ids,

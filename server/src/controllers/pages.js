@@ -34,6 +34,26 @@ export class PagesController{
             }
         });
     }
+    async updatePages(payload) {
+        await Pages.update(
+            {
+                pageText:payload.pageText,
+                // pageImgUrl:payload.pageImgUrl
+            },
+            {
+                where: {
+                    pageId:payload.pageId,
+                    projectId: payload.projectId,
+                }
+            }
+        );
+        return await Pages.findAll({
+            where:{
+                projectId:payload.projectId,
+                pageId: payload.pageId
+            }
+        })
+    }
 }   
 //     async pages(projectId) {
 //         const data = await Pages_Projects.findAll({
@@ -78,19 +98,7 @@ export class PagesController{
 
 //     //编辑项目
 //     //TODO：图片传递
-//     async updatePages(payload) {
-//         await Pages.update(
-//             {
-//                 pagename:payload.pagename,
-//                 // pageImgUrl:payload.pageImgUrl
-//             },
-//             {
-//                 where: {
-//                     pageId:payload.pageId
-//                 }
-//             }
-//         );
-//     }
+
 
 //     async deletePages(pageId) {
 //         await Pages.destroy({

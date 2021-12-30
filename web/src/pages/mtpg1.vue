@@ -2,7 +2,7 @@
   <div class="page">
     <!--面包屑导航区域-->
     <el-breadcrumb separator-class="el-icon-arrow-right" class="">
-      <el-breadcrumb-item :to="{path:'/ImageList'}"  @click="beforePage">{{title}}</el-breadcrumb-item>
+      <el-breadcrumb-item  ><button @click="beforePage" class="noborder">{{title}}</button></el-breadcrumb-item>
       <el-breadcrumb-item>页面管理</el-breadcrumb-item>
     </el-breadcrumb>
     <!--卡片视图区域-->
@@ -14,12 +14,11 @@
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
         </el-col>
-        <el-col :span="6">
-          <!--搜索区域-->
-          <el-input placeholder="简介" v-model="pageText">
-            <el-button slot="append" icon="el-icon-search"></el-button>
-          </el-input>
-        </el-col>
+          <!-- <el-col :span="6">
+            <el-input placeholder="简介" v-model="pageText">
+              <el-button slot="append" icon="el-icon-search"></el-button>
+            </el-input>
+          </el-col> -->
         <el-col :span="4">
           <el-button type="primary" @click="addPage">添加页面</el-button>
         </el-col>
@@ -37,7 +36,7 @@
     />
 
     <el-table :data="pages">
-      <el-table-column label="页标识" prop="pageNo"/>
+      <el-table-column label="页码" prop="pageId"/>
       <!-- <el-table-column label="页标题" prop="pageName"/> -->
       <el-table-column label="页面简介" prop="pageText"/>
       <el-table-column label="创建时间" prop="createdAt"/>
@@ -67,7 +66,7 @@ export default {
       updateModalDisplay: false,
       addModalDisplay:false,
       updatedForm: {
-        pageNo:'',
+        // pageNo:'',
         pageText:'',
       },
       addForm:{
@@ -77,7 +76,7 @@ export default {
       pages:[],
       pageNo:'',
       pageText:'',
-      projectId:0,
+      projectId:-1,
       username:"",
     }
   },
@@ -89,7 +88,7 @@ export default {
     beforePage(){
       this.$router.push({
         name: 'ImageList',
-        params:{
+        query:{
           username:this.username,
         }
       })
@@ -115,6 +114,7 @@ export default {
     },
     updatePage(payload) {
       this.updatedForm = {
+        projectId: this.projectId,
         pageId:payload.pageId,
         pageText:payload.pageText,
       };
@@ -123,7 +123,6 @@ export default {
 
 
     async deletePage(payload) {
-      console.log(payload);
       let param = {
         pageId: payload.pageId,
         projectId: this.projectId
@@ -145,20 +144,21 @@ export default {
       }
     },
     async init(){
-      console.log(this.$route.query);
+      this.username = this.$route.query.username;
       this.projectId = this.$route.query.projectId;
       this.title = this.title + this.projectId;
       await this.$store.dispatch("requestPages", {id: this.projectId});
       this.pages = this.$store.state.pagesList;
     },
 
-    toLayer(id){
+    toLayer(payload){
       this.$router.push({
         name: 'try',
         query:{
           //页面跳转参数：页面id
-          pageId:this.id,
+          pageId:payload.pageId,
           projectId:this.projectId,
+          username:this.username,
         }
       });
     }
@@ -178,6 +178,10 @@ export default {
 </script>
 
 <style>
+
+.noborder{
+  border: none;
+}
 .el-breadcrumb{
   margin-top:15px;
   margin-bottom: 15px;
