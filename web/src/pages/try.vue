@@ -89,26 +89,34 @@
         <el-menu-item index="3">
           <a href="#" target="_blank">帮助</a>
         </el-menu-item>
+        <el-menu-item index="4">
+          <a href="#" target="_blank">返回</a>
+        </el-menu-item>
       </el-menu>
     </div>
     <div class="main">
       <el-row :gutter="10">
-        <el-col :xs="4" :sm="4" :md="3" :lg="3" :xl="1">
+        <el-col :xs="4" :sm="4" :md="3" :lg="3" :xl="1" class="hidden-md-and-down">
           <div class="a">
             <el-col :span="12">
               <layers
                 :layers="arrLayer"
+<<<<<<< HEAD
                 v-on="{
                   itemDelete: itemDelete,
                   itemhide: itemhide,
                   itemshow: itemshow,
                 }"
+=======
+                :numItems="numItem"
+                v-on="{itemDelete:itemDelete ,itemhide:itemhide, itemshow:itemshow}"
+>>>>>>> cjz
                 ref="layers"
               ></layers>
             </el-col>
           </div>
         </el-col>
-        <el-col :xs="14" :sm="16" :md="18" :lg="18" :xl="22">
+        <el-col :xs="18" :sm="20" :md="21" :lg="18" :xl="22">
           <div class="b">
             <div id="container" ref="container" class="container" />
           </div>
@@ -234,6 +242,7 @@
   </div>
 </template>
 
+
 <style scoped>
 .para {
   width: 100%;
@@ -272,15 +281,6 @@ h4 {
 .el-col {
   border-radius: 4px;
 }
-.bg-purple-dark {
-  background: #99a9bf;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
 .grid-content {
   border-radius: 4px;
   min-height: 36px;
@@ -313,14 +313,8 @@ export default {
 
   data() {
     return {
-      arrLayer: [
-        // { id: 1, type: "arrow" },
-        // { id: 2, type: "rectangle" },
-        // { id: 3, type: "star" },
-        // { id: 4, type: "triangle" },
-        // { id: 5, type: "circular" },
-        // { id: 6, type: "line" }
-      ],
+      arrLayer: [],
+      numItem: 0,
 
       activeIndex: "1",
       activeIndex2: "1",
@@ -367,15 +361,11 @@ export default {
   methods: {
     destroy(idd) {
       let shape = this.stage.find(idd)[0];
-      console.log(this.numsCircle);
+      // console.log(this.numsCircle);
       shape.destroy();
     },
     hide(idd) {
-      //(this.stage)
-      //("sssssssssssss")
       let shape = this.stage.find(idd)[0];
-      //(shape)
-      //("zzzzzzzzzzzzzzz")
       shape.hide();
     },
     show(idd) {
@@ -385,14 +375,13 @@ export default {
     itemshow: function (name_count) {
       //("我收到了" + name_count);
       this.$refs.layers._data.numItem--;
+      // this.numItem--;
       if (name_count.indexOf("rect") == 0) {
         let num = name_count.slice(9);
         this.idd = "#myRect" + this.numsRect[num - 1];
       } else if (name_count.indexOf("star") == 0) {
         let num = name_count.slice(4);
         this.idd = "#myStar" + this.numsStar[num - 1];
-        //(num)
-        //("sb")
       } else if (name_count.indexOf("cir") == 0) {
         let num = name_count.slice(8);
         this.idd = "#mycircle" + this.numsCircle[num - 1];
@@ -402,17 +391,23 @@ export default {
       }
       this.show(this.idd);
     },
+<<<<<<< HEAD
     itemDelete: function (name_count) {
       console.log("我收到了" + name_count);
+=======
+    itemDelete: function(name_count) {
+      // console.log(name_count);
+>>>>>>> cjz
 
       this.$refs.layers._data.numItem--;
+      // this.numItem--;
       if (name_count.indexOf("rect") == 0) {
         let num = name_count.slice(9);
         this.idd = "#myRect" + num;
 
         for (let i = 0; i < this.numsRect.length; i++) {
           if (this.numsRect[i] == num) {
-            console.log(num);
+            // console.log(num);
             this.numsRect.splice(i, 1);
           }
         }
@@ -421,7 +416,7 @@ export default {
         this.idd = "#myStar" + num;
         for (let i = 0; i < this.numsStar.length; i++) {
           if (this.numsStar[i] == num) {
-            console.log(num);
+            // console.log(num);
             this.numsStar.splice(i, 1);
           }
         }
@@ -429,12 +424,10 @@ export default {
         let num = name_count.slice(8);
 
         this.idd = "#mycircle" + num;
-
-        console.log(".,,,,,,.......");
-        console.log(name_count);
+        // console.log(name_count);
         for (let i = 0; i < this.numsCircle.length; i++) {
           if (this.numsCircle[i] == num) {
-            console.log(num + ",,,,,,");
+            // console.log(num + ",,,,,,");
             this.numsCircle.splice(i, 1);
           }
         }
@@ -442,24 +435,21 @@ export default {
         let num = name_count.slice(8);
         this.idd = "#myTrangle" + num;
 
-        console.log("num: " + num);
+        // console.log("num: " + num);
         for (let i = 0; i < this.numsTrangle.length; i++) {
           if (this.numsTrangle[i] == num) {
-            console.log(num);
+            // console.log(num);
             this.numsTrangle.splice(i, 1);
           }
         }
-        console.log(this.numsTrangle);
+        // console.log(this.numsTrangle);
       }
-
-      console.log("........");
-      console.log(this.idd);
-
       this.destroy(this.idd);
     },
     itemhide: function (name_count) {
       //("我收到了" + name_count);
       this.$refs.layers._data.numItem--;
+      // this.numItem--;
       if (name_count.indexOf("rect") == 0) {
         let num = name_count.slice(9);
         this.idd = "#myRect" + this.numsRect[num - 1];
@@ -827,11 +817,22 @@ export default {
         id: sum,
         type: "star",
         count: parseInt(this.numsStar.length),
+<<<<<<< HEAD
         ran: this.numsStar[num - 1],
+=======
+        ran: this.numsStar[num]
+>>>>>>> cjz
       };
       this.arrLayer.push(params);
+
+      console.log("params", params);
       this.$refs.layers._data.numItem++;
+<<<<<<< HEAD
       star.on("dragmove", (event) => {
+=======
+      // this.numItem++;
+      star.on("dragmove", event => {
+>>>>>>> cjz
         ////()
         this.x = Math.round(star.attrs.x);
         this.y = Math.round(star.attrs.y);
@@ -1004,12 +1005,23 @@ export default {
         id: sum,
         type: "rectangle",
         count: parseInt(this.numsRect.length),
+<<<<<<< HEAD
         ran: this.numsRect[num - 1],
+=======
+        ran: this.numsRect[num]
+>>>>>>> cjz
       };
+      console.log("sum", params.id);
       this.arrLayer.push(params);
+<<<<<<< HEAD
       this.$refs.layers._data.numItem++;
 
       rect.on("dragmove", (event) => {
+=======
+      // this.$refs.layers._data.numItem++;
+      // this.numItem++;
+      rect.on("dragmove", event => {
+>>>>>>> cjz
         ////(rect.attrs.x);
         this.x = Math.round(rect.attrs.x);
         this.y = Math.round(rect.attrs.y);
@@ -1120,9 +1132,6 @@ export default {
       var num = this.numsCircle.length;
 
       if (idName == "") {
-        //("....");
-
-        // let number =
         this.numsCircle[num] = parseInt(Math.random() * 100 + 1); //随机数范围是1-100
         for (var i = 0; i < num; i++) {
           //内层控制当前生成的随机数和前一个数进行比较，重复则重新生成，反之存入新数组
@@ -1131,6 +1140,7 @@ export default {
           }
         }
         idName = "mycircle" + String(this.numsCircle[num]);
+        alert(idName);
       }
       //("circleNum");
       //(num);
@@ -1177,19 +1187,26 @@ export default {
         this.numsStar.length +
         this.numsTrangle.length +
         this.numsText.length;
-
-      //("circle");
-      //(sum);
+      alert(sum);
       let params = {
         id: sum,
         type: "circular",
         count: parseInt(this.numsCircle.length),
+<<<<<<< HEAD
         ran: this.numsCircle[num - 1],
       };
       this.arrLayer.push(params);
       this.$refs.layers._data.numItem++;
 
       circle.on("dragmove", (event) => {
+=======
+        ran: this.numsCircle[num]
+      };
+      this.arrLayer.push(params);
+      this.$refs.layers._data.numItem++;
+      // this.numItem++;
+      circle.on("dragmove", event => {
+>>>>>>> cjz
         this.x = Math.round(circle.attrs.x);
         this.y = Math.round(circle.attrs.y);
         this.width = Math.round(circle.width() * circle.scaleX());
@@ -1370,11 +1387,20 @@ export default {
         id: sum,
         type: "triangle",
         count: parseInt(this.numsTrangle.length),
+<<<<<<< HEAD
         ran: this.numsTrangle[num - 1],
       };
       this.arrLayer.push(params);
       this.$refs.layers._data.numItem++;
       line.on("dragmove", (event) => {
+=======
+        ran: this.numsTrangle[num]
+      };
+      this.arrLayer.push(params);
+      this.$refs.layers._data.numItem++;
+      // this.numItem++;
+      line.on("dragmove", event => {
+>>>>>>> cjz
         ////(rect.attrs.x);
         this.x = Math.round(line.attrs.x);
         this.y = Math.round(line.attrs.y);
