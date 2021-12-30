@@ -2,7 +2,7 @@
   <div class="page">
     <!--面包屑导航区域-->
     <el-breadcrumb separator-class="el-icon-arrow-right" class="">
-      <el-breadcrumb-item :to="{ path: '/' }">{{title}}</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{path:'/ImageList'}"  @click="beforePage">{{title}}</el-breadcrumb-item>
       <el-breadcrumb-item>页面管理</el-breadcrumb-item>
     </el-breadcrumb>
     <!--卡片视图区域-->
@@ -37,7 +37,8 @@
     />
 
     <el-table :data="pages">
-      <el-table-column label="页码" prop="pageId"/>
+      <el-table-column label="页标识" prop="pageNo"/>
+      <!-- <el-table-column label="页标题" prop="pageName"/> -->
       <el-table-column label="页面简介" prop="pageText"/>
       <el-table-column label="创建时间" prop="createdAt"/>
       <el-table-column label="更新时间" prop="updatedAt"/>
@@ -66,17 +67,18 @@ export default {
       updateModalDisplay: false,
       addModalDisplay:false,
       updatedForm: {
-        pageId: 0,
+        pageNo:'',
         pageText:'',
       },
       addForm:{
-        pageId:0,
+        pageNo:'',
         pageText:'',
       },
       pages:[],
       pageNo:'',
       pageText:'',
       projectId:0,
+      username:"",
     }
   },
   created() {
@@ -84,6 +86,14 @@ export default {
     // this.getlist()
   },
   methods:{
+    beforePage(){
+      this.$router.push({
+        name: 'ImageList',
+        params:{
+          username:this.username,
+        }
+      })
+    },
     getlist(){
       var param = {
         pageindex: this.pageinfo.pageindex,
@@ -135,6 +145,7 @@ export default {
       }
     },
     async init(){
+      console.log(this.$route.query);
       this.projectId = this.$route.query.projectId;
       this.title = this.title + this.projectId;
       await this.$store.dispatch("requestPages", {id: this.projectId});

@@ -20,6 +20,7 @@ export default new Vuex.Store({
     },
     mutations: {
         setLogin(state, message){
+
             if(message == "ok"){
                 state.login = 200;
             } else if (message == "wrong username"){
@@ -30,6 +31,7 @@ export default new Vuex.Store({
             
         },
         setRegist(state, message){
+            // console.log(message);
             if(message == "ok"){
                 state.regist = 200;
             } else if (message == "exist username"){
@@ -111,14 +113,15 @@ export default new Vuex.Store({
     },
     actions: {
         async login(context, payload){
-            let value = await reqInstance.post('/sign/login', {
-                username: payload.username,
+            let value =  await reqInstance.post('/sign/login', {
+                username: payload.username, 
                 password:payload.password
             });
+
             context.commit('setLogin', value.message);
         },
 
-        async password(context, payload){
+        async regist(context, payload){
             let value = await reqInstance.post('/sign/regist', {
                 username: payload.username,
                 password:payload.password
@@ -131,7 +134,8 @@ export default new Vuex.Store({
              * wayoforder：排序方式
              * value: 服务器返回的值
              */
-            let value = await reqInstance.post('/projects/try', {
+            let value = await reqInstance.post('/projects/getall', {
+                username: payload.username,
                 wayOfOrder: payload.wayOfOrder,
             });
             if (value.message == "ok") {

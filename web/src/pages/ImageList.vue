@@ -1,5 +1,6 @@
 <template>
   <VmImageList
+    :username="username"
     :data="dataImageList"
     ref="child"
     @create-ok="createfn"
@@ -21,6 +22,11 @@ export default {
   components: {
     VmImageList,
   },
+  // data:function(){
+  //   return{
+      
+  //   }
+  // },
 
   methods: {
     //新建项目
@@ -68,14 +74,17 @@ export default {
   },
   data: function () {
     return {
+      username:"",
       dataImageList: [],
     };
   },
 
   
   async mounted() {
+    this.username = this.$route.query.username;
     //初始化界面
     await this.$store.dispatch("requestProjects", {
+      username: this.username,
       wayOfOrder: this.$refs.child.wayOfOrder,
     });
     this.dataImageList = this.$store.state.dataImageList;

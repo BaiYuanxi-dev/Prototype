@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
-    "start": "vue-cli-service serve --port 8080",
+    "start": "vue-cli-service serve --port 8081",
     "build": "NODE_ENV=production vue-cli-service build",
     "serve": "serve dist -p 8081",
     "daemon": "nohup npm run serve &"

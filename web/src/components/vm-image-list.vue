@@ -86,6 +86,7 @@
         :key="item.id"
       >
         <VmCard
+          :username="userId"
           ref="child"
           :id="item.id"
           :editable="true"
@@ -150,6 +151,10 @@ export default {
     VmCard,
   },
   props: {
+    username:{
+      type:String,
+      default: "1@qq.com",
+    },
     title: {
       type: String,
       default: "Welcome to my prototype tool!",
@@ -173,6 +178,7 @@ export default {
   },
   data: function () {
     return {
+      userId:"",
       keyword: "", // keyword for search
       dataShow: [], // data for showing
       showNum: 8, // number of item per page
@@ -328,6 +334,10 @@ export default {
       this.dataShow = this.data.slice(0, this.showNum); // update dataShow once data changed
       // console.log(this.dataShow);
     },
+    username:function(){
+      this.userId = this.username;
+      console.log("coamae",this.userId);
+    }
   },
   mounted: function () {
     this.dataShow = this.data.slice(0, this.showNum);

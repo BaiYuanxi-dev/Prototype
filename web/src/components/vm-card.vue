@@ -82,6 +82,7 @@ export default {
   },
   name: "VmCard",
   props: {
+    username:"",
     id: {
       type: Number,
       default: 1,
@@ -122,6 +123,7 @@ export default {
   },
   data: function () {
     return {
+      
       modalDelete: false,
       modalModify: false,
       modifyMsg: {
@@ -164,6 +166,7 @@ export default {
         name: 'mtpg1',
         query:{
           //页面跳转参数：页面id
+          username: this.username,
           projectId:this.id,
         }
       });
@@ -175,7 +178,14 @@ export default {
     },
   },
 
+  watch: {
+    username:function(){
+      // console.log("???")
+      console.log("username", this.username);
+    }
+  },
   mounted(){
+    
     this.modifyMsg.title = this.title; 
     this.modifyMsg.desc = this.desc;
     this.imgUrl = this.img;
@@ -190,13 +200,13 @@ export default {
   background-color: #1568a6;
   color: #fff;
 }
-/* 
+
 .card-img{
-  width: 410px;
+  /* width: 410px; */
   height: 236px;
 }
 .card-img img{
   width: 100%;
   height: 100%;
-} */
+} 
 </style>

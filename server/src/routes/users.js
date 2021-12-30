@@ -25,6 +25,18 @@ userRoute.post('/login', async function(ctx){
 userRoute.post('/regist', async function(ctx){
     const payload = ctx.request.body;
     const state = await new UsersController().SignUp(payload);
+
+    if(state){
+        ctx.body = {
+            data: state,
+            message:'ok',
+        }
+    }  else {
+        ctx.body = {
+            data: state,
+            message:'exist username',
+        }
+    }
 })
 
 export {
