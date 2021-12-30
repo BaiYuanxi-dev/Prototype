@@ -30,7 +30,7 @@
             <span :class="iconfont layers_before-rectangle></span>
           </el-menu-item>-->
           <el-menu-item
-            v-for="(num, index) in layers"
+            v-for="(num) in layers"
             :key="num.ran"
             :index="num.id.toString()"
             @mouseover.native="mousein(num.id)"
@@ -40,7 +40,7 @@
           >
             <span class="iconfont" :class="getClassType(num.type)"></span>
             <span class="layers-content">{{ num.type + num.count}}</span>
-            <span class="iconfont after" @click.stop="deleteItem(num.id,num.type,num.ran)"></span>
+            <span class="iconfont after" @click.stop="deleteItem(num.id, num.type, num.ran)"></span>
             <span class="iconfont eye" @click.stop="close(num.id,num.type,num.count)"></span>
             <span class="iconfont close" @click.stop="open(num.id,num.type,num.count)"></span>
           </el-menu-item>
@@ -152,10 +152,10 @@
 }
 .layers-content {
   float: left;
-  font-size: 20px;
+  font-size: 18px;
 }
-li {
-  list-style: none;
+.el-menu-vertical-demo {
+  width: 100%;
 }
 </style>
 <script>
@@ -169,6 +169,7 @@ export default {
     count: {
       type: Number
     }
+    // numItems: 0
   },
   data() {
     return {
@@ -197,9 +198,23 @@ export default {
     },
     clickon: function(count) {},
     deleteItem: function(id, name, count) {
+      // console.log(id);
+      //, name, count
+      // console.log("id", id);
+      // console.log("name", name);
+      // console.log("count", count);
       this.$emit("itemDelete", name + count);
-      console.log("!!!!!!!!!");
-      console.log(count);
+      // console.log(this.layers[0]);
+      // for (let i = 0; i < this.layers.length; i++) {
+      // if (count == this.layers[i].ran) {
+      // this.layers.delete[i];
+      // }
+      // }
+      // console.log("cjz", this.$refs[id][0].$el);
+      console.log("layers", this.layers);
+      console.log("..", this.layers[id - 1]);
+
+      // this.layers[0].id--;
       this.$refs[id][0].$el.style.display = "none";
     },
 
@@ -235,6 +250,11 @@ export default {
         case "line":
           return " layers_before-line";
       }
+    }
+  },
+  watch: {
+    layers: function() {
+      // console.log("layers", this.layers);
     }
   }
 };
