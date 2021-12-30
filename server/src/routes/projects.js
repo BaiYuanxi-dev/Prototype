@@ -15,7 +15,7 @@ const projectRoute = new KoaRouter({
 
 
 //根据发送来的排序方式 返回排序后的数据给前端
-projectRoute.post('/try', async function(ctx){
+projectRoute.post('/getall', async function(ctx){
     const payload = ctx.request.body;
     const data = await new ProjectsController().projectsChoose(payload);
     ctx.body = {

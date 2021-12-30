@@ -20,27 +20,39 @@
             </div>
           </div>
           <h1>Welcome back</h1>
-          <form action="#" class="form">
-            <div>
-              <i class="fa el-icon-user-solid"></i>
-              <input
-                type="text"
-                placeholder="username"
-                v-model="loginForm.username"
-              />
-            </div>
-            <div>
-              <i class="fa el-icon-lock"></i>
-              <input
+          <el-form
+            :model="ruleForm"
+            status-icon
+            :rules="rules"
+            ref="ruleForm"
+            class="form"
+          >
+            <el-form-item prop="username">
+              <el-input
+                prefix-icon="el-icon-user-solid"
+                v-model="ruleForm.username"
+                placeholder="email"
+              ></el-input>
+            </el-form-item>
+            <el-form-item prop="pass">
+              <el-input
+                prefix-icon="el-icon-lock"
                 type="password"
+                v-model="ruleForm.pass"
+                autocomplete="off"
                 placeholder="password"
-                v-model="loginForm.password"
-              />
-            </div>
-            <div class="btn">
-              <button @click="login">login</button>
-            </div>
-          </form>
+              ></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button
+                type="primary"
+                @click="submitForm('ruleForm')"
+                class="custom-btn btn-3"
+                >登录</el-button
+              >
+            </el-form-item>
+          </el-form>
+
           <p class="btn-something">
             Don't have an account ?
             <span ref="tosignup" class="signupbtn" @click="toSignup"
@@ -57,23 +69,49 @@
             </div>
           </div>
           <h1>Let's get started</h1>
-          <form action="#" class="form">
-            <div>
-              <i class="fa el-icon-user-solid"></i>
-              <input type="text" placeholder="username" />
-            </div>
-            <div>
-              <i class="fa el-icon-lock"></i>
-              <input type="password" placeholder="password" />
-            </div>
-            <div>
-              <i class="fa el-icon-lock"></i>
-              <input type="password" placeholder="repeated_password" />
-            </div>
-            <div class="btn">
-              <button>signup</button>
-            </div>
-          </form>
+          <el-form
+            :model="registRuleForm"
+            status-icon
+            :rules="rules2"
+            ref="registRuleForm"
+            class="form"
+          >
+            <el-form-item prop="username">
+              <el-input
+                prefix-icon="el-icon-user-solid"
+                v-model="registRuleForm.username"
+                placeholder="username"
+              ></el-input>
+            </el-form-item>
+            <el-form-item prop="pass">
+              <el-input
+                prefix-icon="el-icon-lock"
+                type="password"
+                v-model="registRuleForm.pass"
+                autocomplete="off"
+                placeholder="password"
+              ></el-input>
+            </el-form-item>
+            <el-form-item prop="checkPass">
+              <el-input
+                prefix-icon="el-icon-lock"
+                type="password"
+                v-model="registRuleForm.checkPass"
+                autocomplete="off"
+                placeholder="repeat_password"
+              ></el-input>
+            </el-form-item>
+
+            <el-form-item>
+              <!-- <button class="custom-btn btn-3"><span>Read More</span></button> -->
+              <el-button
+                type="primary"
+                @click="submitRegisterForm('registRuleForm')"
+                class="custom-btn btn-3"
+                >注册</el-button
+              >
+            </el-form-item>
+          </el-form>
           <p class="btn-something">
             Already have an account ?
             <span ref="tosignin" class="loginbtn" @click="toSignin">login</span>
@@ -86,44 +124,145 @@
 
 <script>
 export default {
-  data: function () {
+  data() {
+    var checkusername = (rule, value, callback) => {
+      if (value === "") {
+        return callback(new Error("邮箱不能为空"));
+      }
+      setTimeout(() => {
+        if (!this.isEmail(value)) {
+          callback(new Error("请输入正确的邮箱"));
+        } else {
+          callback();
+        }
+      }, 1000);
+    };
+    var validatePass0 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (value.length < 6) {
+          callback(new Error("密码不少于6位"));
+        }
+        callback();
+      }
+    };
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (this.ruleForm.checkPass !== "") {
+          this.$refs.registRuleForm.validateField("checkPass");
+        }
+        callback();
+      }
+    };
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.registRuleForm.pass) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
     return {
-      loginForm: {
+      ruleForm: {
+        pass: "",
         username: "",
-        password: "",
+      },
+      rules: {
+        pass: [{ validator: validatePass0, trigger: "blur" }],
+        username: [{ validator: checkusername, trigger: "blur" }],
+      },
+      registRuleForm: {
+        pass: "",
+        checkPass: "",
+        username: "",
+      },
+      rules2: {
+        pass: [{ validator: validatePass, trigger: "blur" }],
+        checkPass: [{ validator: validatePass2, trigger: "blur" }],
+        username: [{ validator: checkusername, trigger: "blur" }],
       },
     };
   },
   methods: {
-    async login() {
-        console.log(this.loginForm);
-      if (this.loginInputValid()) {
-        await this.$store.dispatch("login", this.loginForm);
-      }
-      let loginState = this.$store.state.login;
-      console.log(loginState);
-      if(loginState == 200){
-        alert("登录成功");
-      }else if (loginState == 401){
+    isEmail(s) {
+      return /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/.test(
+        s
+      );
+    },
+    async submitForm(formName) {
+      let params = {
+        username: "",
+        password: "",
+      };
+      let couldSub = false;
+      await this.$refs[formName].validate().then(async (valid) => {
+        if (valid) {
+          params.username = this.ruleForm.username;
+          params.password = this.ruleForm.pass;
+          couldSub = true;
+          return true;
+          // await this.$store.dispatch("login", params);
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+      // console.log(couldSub)
+      if (couldSub) {
+        await this.$store.dispatch("login", params);
+        let loginState = this.$store.state.login;
+        loginState = this.$store.state.login;
+        if (loginState == 200) {
+          // alert("登录成功");
+          this.$router.push({
+            name: "ImageList",
+            query: {
+              username: this.ruleForm.username,
+            },
+          });
+        } else if (loginState == 401) {
           alert("用户名不存在");
           return;
-      }else if (loginState == 402){
+        } else if (loginState == 402) {
           alert("密码错误");
           return;
+        }
       }
-      
-      this.$router.push({
-        name: "ImageList",
-        query: {
-          //页面跳转参数：页面id
-          username: 111,
-        },
-      });
-
-      //   console.log(this.loginForm);
     },
-    loginInputValid() {
-      return true;
+
+    async submitRegisterForm(formName) {
+      let params = {
+        username: "",
+        password: "",
+      };
+      let couldSub = false;
+      await this.$refs[formName].validate().then(async(valid) => {
+        if (valid) {
+          params.username = this.registRuleForm.username;
+          params.password = this.registRuleForm.pass;
+          couldSub = true;
+          return true;
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+      console.log(couldSub);
+      if (couldSub) {
+        await this.$store.dispatch("regist", params);
+        let registState = this.$store.state.regist;
+        if (registState == 200) {
+          alert("注册成功");
+          this.toSignin();
+        } else if (registState == 401) {
+          alert("用户名已存在");
+          return;
+        }
+      }
     },
     toSignup() {
       this.$refs.login.style.transform = "rotateY(180deg)";
@@ -140,9 +279,9 @@ export default {
 </script>
 
 <style>
-body {
+/* body {
   background-color: #f0f5f5;
-}
+} */
 
 body::before {
   content: "";
@@ -242,11 +381,11 @@ body::before {
   margin: 5px;
 }
 
-.container .form div {
+/* .container .form div {
   position: relative;
-}
+} */
 
-.container .form div .fa {
+.container .form .fa {
   position: absolute;
   top: 18px;
   left: 25px;
@@ -312,6 +451,110 @@ svg {
     1px 4px 1px rgba(16, 16, 16, 0.1), 1px 5px 1px rgba(16, 16, 16, 0.1),
     1px 6px 1px rgba(16, 16, 16, 0.1), 1px 7px 1px rgba(16, 16, 16, 0.1),
     1px 8px 1px rgba(16, 16, 16, 0.1);
+}
+
+.custom-btn {
+  width: 130px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: "Lato", sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+    7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+.btn-3 {
+  background: rgb(0, 172, 238);
+  background: linear-gradient(
+    0deg,
+    rgba(0, 172, 238, 1) 0%,
+    rgba(2, 126, 251, 1) 100%
+  );
+  width: 130px;
+  height: 40px;
+  line-height: 42px;
+  padding: 0;
+  border: none;
+}
+
+.btn-3 span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.btn-3:before,
+.btn-3:after {
+  position: absolute;
+  content: "";
+  right: 0;
+  top: 0;
+  background: rgba(2, 126, 251, 1);
+  transition: all 0.3s ease;
+}
+
+.btn-3:before {
+  height: 0%;
+  width: 2px;
+}
+
+.btn-3:after {
+  width: 0%;
+  height: 2px;
+}
+
+.btn-3:hover {
+  background: transparent;
+  box-shadow: none;
+}
+
+.btn-3:hover:before {
+  height: 100%;
+}
+
+.btn-3:hover:after {
+  width: 100%;
+}
+
+.btn-3 span:hover {
+  color: rgba(2, 126, 251, 1);
+}
+
+.btn-3 span:before,
+.btn-3 span:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  bottom: 0;
+  background: rgba(2, 126, 251, 1);
+  transition: all 0.3s ease;
+}
+
+.btn-3 span:before {
+  width: 2px;
+  height: 0%;
+}
+
+.btn-3 span:after {
+  width: 0%;
+  height: 2px;
+}
+
+.btn-3 span:hover:before {
+  height: 100%;
+}
+
+.btn-3 span:hover:after {
+  width: 100%;
 }
 </style>
 
