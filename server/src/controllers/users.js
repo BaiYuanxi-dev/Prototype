@@ -2,8 +2,8 @@ import { Sequelize } from "sequelize";
 import { Users } from "../model/user";
 
 export class UsersController{
-    async SignIn(payload){
-        return await Users.findAll({
+    SignIn(payload){
+        return Users.findAll({
             where: {
                 username: payload.username
             }
@@ -11,13 +11,15 @@ export class UsersController{
     }
 
     async SignUp(payload){
-        let user = await Users.findAll({
+        const user = await Users.findAll({
             where: {
                 username: payload.username
             }
         });
+        
+        // return {"length": user.length};
         if (user.length == 0){
-            await Users.update(
+            await Users.create(
                 {
                     username: payload.username,
                     password: payload.password,

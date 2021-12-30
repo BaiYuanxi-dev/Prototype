@@ -17,15 +17,21 @@ export class ProjectsController{
      *      wayOfOrder 排序方式
      */
     async projectsChoose(payload){
-
+        const username = payload.username;
         if(payload.wayOfOrder == '1'){
             //按时间默认排序
             return await Projects.findAll({
+                where: {
+                    username: username,
+                },
                 order: [[ 'createdAt', 'DESC' ]],
             });
         } else {
             //按项目名称排序
             return await Projects.findAll({
+                where: {
+                    username: username,
+                },
                 order: [[ 'title', 'DESC' ]],
             });
         }
