@@ -18,71 +18,20 @@
           <template slot="title">置入</template>
           <el-menu-item
             index="2-1"
-            @click="
-              getRectangle(
-                200,
-                300,
-                200,
-                50,
-                '#fff',
-                '#000',
-                1,
-                '#000',
-                10,
-                10,
-                10,
-                ''
-              )
-            "
-            >矩形</el-menu-item
-          >
+            @click="getRectangle(200, 300, 200, 50, '#fff', '#000', 1, '#000', 10, 10, 10,'')"
+          >矩形</el-menu-item>
           <el-menu-item
             index="2-2"
-            @click="
-              getCircle(200, 300, 50, '#fff', '#000', 1, '#000', 10, 10, 10, '')
-            "
-            >圆形</el-menu-item
-          >
+            @click="getCircle(200, 300, 50, '#fff', '#000', 1, '#000', 10, 10, 10, '')"
+          >圆形</el-menu-item>
           <el-menu-item
             index="2-3"
-            @click="
-              getTrangle(
-                200,
-                300,
-                200,
-                50,
-                '#fff',
-                '#000',
-                1,
-                '#000',
-                10,
-                10,
-                10,
-                ''
-              )
-            "
-            >三角形</el-menu-item
-          >
+            @click="getTrangle(200, 300, 200, 50,'#fff','#000', 1, '#000', 10, 10, 10,'')"
+          >三角形</el-menu-item>
           <el-menu-item
             index="2-4"
-            @click="
-              getStar(
-                200,
-                300,
-                200,
-                200,
-                '#fff',
-                '#000',
-                1,
-                '#000',
-                10,
-                10,
-                10,
-                ''
-              )
-            "
-            >星形</el-menu-item
-          >
+            @click="getStar(200, 300, 200, 200, '#fff', '#000', 1, '#000', 10, 10, 10, '')"
+          >星形</el-menu-item>
           <el-menu-item index="2-5">文字</el-menu-item>
         </el-submenu>
 
@@ -92,153 +41,133 @@
       </el-menu>
     </div>
     <div class="main">
-      <div class="a">
-        <el-col :span="12">
-          <layers
-            :layers="arrLayer"
-            v-on="{itemDelete:itemDelete ,itemhide:itemhide, itemshow:itemshow}"
-            ref="layers"
-          ></layers>
+      <el-row :gutter="10">
+        <el-col :xs="4" :sm="4" :md="3" :lg="3" :xl="1">
+          <div class="a">
+            <el-col :span="12">
+              <layers
+                :layers="arrLayer"
+                v-on="{itemDelete:itemDelete ,itemhide:itemhide, itemshow:itemshow}"
+                ref="layers"
+              ></layers>
+            </el-col>
+          </div>
         </el-col>
-      </div>
-      <div class="b">
-        <div id="container" ref="container" class="container" />
-      </div>
-      <div class="c">
-        <div>
-          <h4 style="font-weight: 300; font-size: 14px">参数</h4>
-          <div class="para">
-            <div class="x">
-              <input type="text" v-model="x" @change="change()" id="X" />
+        <el-col :xs="14" :sm="16" :md="18" :lg="18" :xl="22">
+          <div class="b">
+            <div id="container" ref="container" class="container" />
+          </div>
+        </el-col>
+        <el-col :xs="6" :sm="4" :md="3" :lg="3" :xl="1">
+          <div class="c">
+            <div>
+              <h4 style="font-size: 14px">参数</h4>
+              <div class="para">
+                <div class="x">
+                  x:
+                  <input type="text" v-model="x" @change="change()" id="X" />
+                </div>
+                <div class="y">
+                  y:
+                  <input type="text" v-model="y" @change="change()" id="X" />
+                </div>
+                <div class="w">
+                  w:
+                  <input type="text" v-model="width" @change="change()" id="X" />
+                </div>
+                <div class="h">
+                  h:
+                  <input type="text" v-model="height" @change="change()" id="X" />
+                </div>
+              </div>
             </div>
-            <div class="y">
-              <input type="text" v-model="y" @change="change()" id="X" />
+            <div>
+              <h4 style="font-weight: 300; font-size: 14px; margin-top: 20px">背景色</h4>
+              <div>
+                颜色
+                <el-color-picker
+                  v-model="color1"
+                  @change="changeColor()"
+                  size="large"
+                  style="display: block; margin-bottom: 10px"
+                ></el-color-picker>
+                <input
+                  type="text"
+                  style="border-radius: 5px; width: 100px"
+                  v-model="color"
+                  @change="Color()"
+                />
+              </div>
+              <!-- <div class="demonstration" style="margin:20px 0">颜色</div> -->
             </div>
-            <div class="w">
-              <input
-                type="text"
-                v-model="width"
-                value="w"
-                @change="change()"
-                id="X"
-              />
+            <div>
+              <h4 style="font-weight: 300; font-size: 14px; margin-top: 20px">边框</h4>
+              <div>
+                颜色
+                <el-color-picker
+                  v-model="color2"
+                  @change="changeColor1()"
+                  size="large"
+                  style="display: block; margin-bottom: 10px"
+                ></el-color-picker>粗细
+                <input
+                  type="text"
+                  style="border-radius: 5px; width: 100px"
+                  v-model="borderWidth"
+                  @change="changeWidth()"
+                />
+              </div>
             </div>
-            <div class="h">
-              <input
-                type="text"
-                v-model="height"
-                value="h"
-                @change="change()"
-                id="X"
-              />
+            <div>
+              <h4 style="font-weight: 300; font-size: 14px">阴影</h4>
+              <div>
+                颜色
+                <el-color-picker
+                  v-model="color3"
+                  @change="changeColor2()"
+                  size="large"
+                  style="display: block; margin-bottom: 10px"
+                ></el-color-picker>
+                <div>
+                  x偏移
+                  <input
+                    type="text"
+                    style="border-radius: 5px; width: 100px"
+                    v-model="x1"
+                    @change="changeX()"
+                  />
+                </div>
+                <div>
+                  y偏移
+                  <input
+                    type="text"
+                    style="border-radius: 5px; width: 100px"
+                    v-model="y1"
+                    @change="changeY()"
+                  />
+                </div>
+                <div>
+                  模糊度
+                  <input
+                    type="text"
+                    style="border-radius: 5px; width: 100px"
+                    v-model="blur"
+                    @change="changeBlur()"
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div style="width: 200px">
-          <h4 style="font-weight: 300; font-size: 14px; margin-top: 20px">
-            背景色
-          </h4>
-          <div>
-            <el-color-picker
-              v-model="color1"
-              @change="changeColor()"
-              size="mini"
-              style="display: block; margin-bottom: 10px"
-            ></el-color-picker>
-            <input
-              type="text"
-              style="border-radius: 5px; width: 100px"
-              v-model="color"
-              @change="Color()"
-            />
-          </div>
-          <!-- <div class="demonstration" style="margin:20px 0">颜色</div> -->
-        </div>
-
-        <div>
-          <h4 style="font-weight: 300; font-size: 14px; margin-top: 20px">
-            边框
-          </h4>
-          <div>
-            <el-color-picker
-              v-model="color2"
-              @change="changeColor1()"
-              size="mini"
-              style="display: block; margin-bottom: 10px"
-            ></el-color-picker>
-            <input
-              type="text"
-              style="border-radius: 5px; width: 100px"
-              v-model="borderWidth"
-              @change="changeWidth()"
-            />
-          </div>
-        </div>
-        <div>
-          <h4 style="font-weight: 300; font-size: 14px">阴影</h4>
-          <div>
-            <el-color-picker
-              v-model="color3"
-              @change="changeColor2()"
-              size="mini"
-              style="display: block; margin-bottom: 10px"
-            ></el-color-picker>
-            <input
-              type="text"
-              style="border-radius: 5px; width: 100px"
-              v-model="x1"
-              @change="changeX()"
-            />
-            <input
-              type="text"
-              style="border-radius: 5px; width: 100px"
-              v-model="y1"
-              @change="changeY()"
-            />
-            <input
-              type="text"
-              style="border-radius: 5px; width: 100px"
-              v-model="blur"
-              @change="changeBlur()"
-            />
-          </div>
-        </div>
-      </div>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
 
 <style scoped>
 .para {
-  width: 200px;
-  height: 50px;
-  background-color: #fff;
-  font-size: 5px;
-}
-.para div {
-  float: left;
-  width: 50px;
-  height: 30px;
-}
-.para div span {
-  float: left;
-}
-.para .x {
-  float: left;
-  margin-left: 20px;
-}
-
-.para .y {
-  margin-left: 20px;
-  margin-right: 50px;
-}
-
-.para .w {
-  margin-left: 20px;
-}
-.para .h {
-  margin-left: 20px;
-  margin-right: 50px;
+  width: 100%;
+  font-size: 15px;
 }
 .el-col-12 {
   width: 100%;
@@ -246,19 +175,19 @@
 .main .a {
   float: left;
   height: 1000px;
-  width: 200px;
+  width: 100%;
   /* background-color: lightgray; */
 }
 .main .b {
   float: left;
-  height: 1000px;
-  width: 1274px;
+  height: 100%;
+  width: 100%;
   background-color: lightgray;
 }
 .main .c {
   float: left;
   height: 1000px;
-  width: 200px;
+  width: 100%;
 }
 h4 {
   text-align: left;
@@ -270,8 +199,26 @@ h4 {
   margin: 5px;
   /* //height: 40px; */
 }
+.el-col {
+  border-radius: 4px;
+}
+.bg-purple-dark {
+  background: #99a9bf;
+}
+.bg-purple {
+  background: #d3dce6;
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+
 #X {
-  width: 50px;
+  padding: 5px 0;
+  width: 50%;
   height: 20px;
   border: 1px solid lightgrey;
   border-radius: 5px;
@@ -307,10 +254,10 @@ export default {
 
       activeIndex: "1",
       activeIndex2: "1",
-      x: "x",
-      y: "y",
-      width: 0,
-      height: 0,
+      x: "0",
+      y: "0",
+      width: "0",
+      height: "0",
       stage: null,
       color1: "#FFFFFF",
       color: "#FFFFFF",
@@ -339,7 +286,7 @@ export default {
       textId: [],
       tranId: [],
       textId: [],
-      idd: "",
+      idd: ""
     };
   },
 
@@ -350,7 +297,7 @@ export default {
       shape.destroy();
     },
     hide(idd) {
-       //(this.stage)
+      //(this.stage)
       //("sssssssssssss")
       let shape = this.stage.find(idd)[0];
       //(shape)
@@ -361,84 +308,7 @@ export default {
       let shape = this.stage.find(idd)[0];
       shape.show();
     },
-    itemshow: function (name_count) {
-            //("我收到了" + name_count);
-      this.$refs.layers._data.numItem--;
-      if (name_count.indexOf("rect") == 0) {
-        let num = name_count.slice(9);
-        this.idd = "#myRect" + this.numsRect[num - 1];
-      } else if (name_count.indexOf("star") == 0) {
-        let num = name_count.slice(4);
-        this.idd = "#myStar" + this.numsStar[num - 1];
-        //(num)
-        //("sb")
-      } else if (name_count.indexOf("cir") == 0) {
-        let num = name_count.slice(8);
-        this.idd = "#mycircle" + this.numsCircle[num - 1];
-      } else if (name_count.indexOf("tr") == 0) {
-        let num = name_count.slice(8);
-        this.idd = "#myTrangle" + this.numsTrangle[num - 1];
-
-      }
-      this.show(this.idd);
-    },
-    itemDelete: function (name_count) {
-          console.log("我收到了" + name_count);
-
-      this.$refs.layers._data.numItem--;
-      if (name_count.indexOf("rect") == 0) {
-        let num = name_count.slice(9);
-        this.idd = "#myRect" + num;
-        
-        for(let i = 0; i < this.numsRect.length; i++){
-          if(this.numsRect[i] == num){
-            console.log(num);
-              this.numsRect.splice(i, 1);
-          }
-          
-        }
-      } else if (name_count.indexOf("star") == 0) {
-        let num = name_count.slice(4);
-        this.idd = "#myStar" + num;
-        for(let i = 0; i < this.numsStar.length; i++){
-          if(this.numsStar[i] == num){
-            console.log(num);
-            this.numsStar.splice(i, 1);
-          }
-        }
-      } else if (name_count.indexOf("cir") == 0) {
-        let num = name_count.slice(8);
-
-        this.idd = "#mycircle" + num;
-
-         console.log(".,,,,,,.......");
-        console.log(name_count);
-        for(let i = 0; i < this.numsCircle.length; i++){
-          if(this.numsCircle[i] == num){
-              console.log(num + ",,,,,,");
-              this.numsCircle.splice(i, 1);
-          }
-        }
-      } else if (name_count.indexOf("tr") == 0) {
-        let num = name_count.slice(8);
-        this.idd = "#myTrangle" + num;
-
-        console.log("num: " + num)
-        for(let i = 0; i < this.numsTrangle.length; i++){
-          if(this.numsTrangle[i] == num){
-            console.log(num);
-              this.numsTrangle.splice(i, 1);
-          }
-        }
-        console.log(this.numsTrangle);
-      }
-
-       console.log("........");
-        console.log(this.idd);
-      
-      this.destroy(this.idd);
-    },
-    itemhide: function (name_count) {
+    itemshow: function(name_count) {
       //("我收到了" + name_count);
       this.$refs.layers._data.numItem--;
       if (name_count.indexOf("rect") == 0) {
@@ -455,7 +325,81 @@ export default {
       } else if (name_count.indexOf("tr") == 0) {
         let num = name_count.slice(8);
         this.idd = "#myTrangle" + this.numsTrangle[num - 1];
+      }
+      this.show(this.idd);
+    },
+    itemDelete: function(name_count) {
+      console.log("我收到了" + name_count);
 
+      this.$refs.layers._data.numItem--;
+      if (name_count.indexOf("rect") == 0) {
+        let num = name_count.slice(9);
+        this.idd = "#myRect" + num;
+
+        for (let i = 0; i < this.numsRect.length; i++) {
+          if (this.numsRect[i] == num) {
+            console.log(num);
+            this.numsRect.splice(i, 1);
+          }
+        }
+      } else if (name_count.indexOf("star") == 0) {
+        let num = name_count.slice(4);
+        this.idd = "#myStar" + num;
+        for (let i = 0; i < this.numsStar.length; i++) {
+          if (this.numsStar[i] == num) {
+            console.log(num);
+            this.numsStar.splice(i, 1);
+          }
+        }
+      } else if (name_count.indexOf("cir") == 0) {
+        let num = name_count.slice(8);
+
+        this.idd = "#mycircle" + num;
+
+        console.log(".,,,,,,.......");
+        console.log(name_count);
+        for (let i = 0; i < this.numsCircle.length; i++) {
+          if (this.numsCircle[i] == num) {
+            console.log(num + ",,,,,,");
+            this.numsCircle.splice(i, 1);
+          }
+        }
+      } else if (name_count.indexOf("tr") == 0) {
+        let num = name_count.slice(8);
+        this.idd = "#myTrangle" + num;
+
+        console.log("num: " + num);
+        for (let i = 0; i < this.numsTrangle.length; i++) {
+          if (this.numsTrangle[i] == num) {
+            console.log(num);
+            this.numsTrangle.splice(i, 1);
+          }
+        }
+        console.log(this.numsTrangle);
+      }
+
+      console.log("........");
+      console.log(this.idd);
+
+      this.destroy(this.idd);
+    },
+    itemhide: function(name_count) {
+      //("我收到了" + name_count);
+      this.$refs.layers._data.numItem--;
+      if (name_count.indexOf("rect") == 0) {
+        let num = name_count.slice(9);
+        this.idd = "#myRect" + this.numsRect[num - 1];
+      } else if (name_count.indexOf("star") == 0) {
+        let num = name_count.slice(4);
+        this.idd = "#myStar" + this.numsStar[num - 1];
+        //(num)
+        //("sb")
+      } else if (name_count.indexOf("cir") == 0) {
+        let num = name_count.slice(8);
+        this.idd = "#mycircle" + this.numsCircle[num - 1];
+      } else if (name_count.indexOf("tr") == 0) {
+        let num = name_count.slice(8);
+        this.idd = "#myTrangle" + this.numsTrangle[num - 1];
       }
       //(this.idd);
       this.hide(this.idd);
@@ -469,8 +413,8 @@ export default {
         let bgColor = shape.attrs.fill;
         let borderColor = shape.attrs.stroke;
         let borderWidth = shape.attrs.strokeWidth;
-        
-        let height = Math.abs(Math.round(shape.height() * shape.scaleY()));;
+
+        let height = Math.abs(Math.round(shape.height() * shape.scaleY()));
         let shadowBlur = shape.attrs.shadowBlur;
         let shadowColor = shape.attrs.shadowColor;
         let shadowOffsetX = shape.attrs.shadowOffsetX;
@@ -491,7 +435,7 @@ export default {
           shadowOffsetY,
           width,
           x_co,
-          y_co,
+          y_co
         });
       }
 
@@ -502,7 +446,7 @@ export default {
         let bgColor = shape.attrs.fill;
         let borderColor = shape.attrs.stroke;
         let borderWidth = shape.attrs.strokeWidth;
-        let height = Math.abs(Math.round(shape.height() * shape.scaleY()));;
+        let height = Math.abs(Math.round(shape.height() * shape.scaleY()));
         let shadowBlur = shape.attrs.shadowBlur;
         let shadowColor = shape.attrs.shadowColor;
         let shadowOffsetX = shape.attrs.shadowOffsetX;
@@ -513,10 +457,9 @@ export default {
 
         console.log("ddddddddddd");
         console.log(shape.attrs.stroke);
-        console.log(shape.attrs)
+        console.log(shape.attrs);
         console.log("ddddddddddd");
         console.log(borderWidth);
-       
 
         this.allGraphs.push({
           layerId,
@@ -530,12 +473,10 @@ export default {
           shadowOffsetY,
           width,
           x_co,
-          y_co,
+          y_co
         });
       }
 
-
-        
       for (let i = 0; i < this.numsCircle.length; i++) {
         let shape = this.stage.find("#mycircle" + this.numsCircle[i])[0];
         //(this.stage.find("#mycircle" + this.numsCircle[i])[0]);
@@ -544,7 +485,7 @@ export default {
         let bgColor = shape.attrs.fill;
         let borderColor = shape.attrs.stroke;
         let borderWidth = shape.attrs.strokeWidth;
-        let height = Math.abs(Math.round(shape.height() * shape.scaleY()));;
+        let height = Math.abs(Math.round(shape.height() * shape.scaleY()));
         let shadowBlur = shape.attrs.shadowBlur;
         let shadowColor = shape.attrs.shadowColor;
         let shadowOffsetX = shape.attrs.shadowOffsetX;
@@ -571,11 +512,11 @@ export default {
           shadowOffsetY,
           width,
           x_co,
-          y_co,
+          y_co
         });
       }
 
-console.log(this.numsTrangle.length);
+      console.log(this.numsTrangle.length);
       for (let i = 0; i < this.numsTrangle.length; i++) {
         let shape = this.stage.find("#myTrangle" + this.numsTrangle[i])[0];
         //(this.stage.find("#myTrangle" + this.numsTrangle[i])[0]);
@@ -583,7 +524,7 @@ console.log(this.numsTrangle.length);
         let bgColor = shape.attrs.fill;
         let borderColor = shape.attrs.stroke;
         let borderWidth = shape.attrs.strokeWidth;
-        let height = Math.abs(Math.round(shape.height() * shape.scaleY()));;
+        let height = Math.abs(Math.round(shape.height() * shape.scaleY()));
         let shadowBlur = shape.attrs.shadowBlur;
         let shadowColor = shape.attrs.shadowColor;
         let shadowOffsetX = shape.attrs.shadowOffsetX;
@@ -604,7 +545,7 @@ console.log(this.numsTrangle.length);
           shadowOffsetY,
           width,
           x_co,
-          y_co,
+          y_co
         });
       }
       // //(this.rect.length);
@@ -697,7 +638,7 @@ console.log(this.numsTrangle.length);
         duration: 0,
         x: Math.round(this.x),
         y: Math.round(this.y),
-        easing: Konva.Easings.Linear,
+        easing: Konva.Easings.Linear
       });
       tween.play();
       ////(tween.node.attrs.width);
@@ -708,7 +649,8 @@ console.log(this.numsTrangle.length);
       var text = new Konva.Text({
         x: 20,
         y: 60,
-        text: "COMPLEX TEXT\n\nAll the world's a stage, and all the men and women merely players. They have their exits and their entrances.",
+        text:
+          "COMPLEX TEXT\n\nAll the world's a stage, and all the men and women merely players. They have their exits and their entrances.",
         fontSize: 38,
         fontFamily: "Calibri",
         fill: "#555",
@@ -717,7 +659,7 @@ console.log(this.numsTrangle.length);
         align: "center",
         //shadowOffset: { x: 10, y: 10 },
         stroke: "red",
-        strokeWidth: 1,
+        strokeWidth: 1
       });
 
       this.layer.add(text);
@@ -770,7 +712,7 @@ console.log(this.numsTrangle.length);
         shadowOpacity: 0.5,
         draggable: true,
         shadowColor: shadowColor,
-        id: idName,
+        id: idName
       });
 
       this.chaneID = star.id();
@@ -805,16 +747,16 @@ console.log(this.numsTrangle.length);
       //(this.numsStar.length);
       //("star");
       //(sum);
-      console.log(num + " ...........")
+      console.log(num + " ...........");
       let params = {
         id: sum,
         type: "star",
         count: parseInt(this.numsStar.length),
-        ran: this.numsStar[num-1],
+        ran: this.numsStar[num - 1]
       };
       this.arrLayer.push(params);
       this.$refs.layers._data.numItem++;
-      star.on("dragmove", (event) => {
+      star.on("dragmove", event => {
         ////()
         this.x = Math.round(star.attrs.x);
         this.y = Math.round(star.attrs.y);
@@ -831,10 +773,9 @@ console.log(this.numsTrangle.length);
 
         this.x = Math.round(star.attrs.x);
         this.y = Math.round(star.attrs.y);
-        
       });
 
-      star.on("transform", (event) => {
+      star.on("transform", event => {
         this.x = Math.round(star.attrs.x);
         this.y = Math.round(star.attrs.y);
         this.width = Math.round(star.width() * star.scaleX());
@@ -853,7 +794,7 @@ console.log(this.numsTrangle.length);
         ////(this.height);
       });
 
-      this.stage.on("click", (event) => {
+      this.stage.on("click", event => {
         ////(event.evt.layerX);
         if (
           event.evt.layerX <= this.x - 20 ||
@@ -867,7 +808,7 @@ console.log(this.numsTrangle.length);
         }
       });
 
-      star.on("click", (event) => {
+      star.on("click", event => {
         tr.enabledAnchors([
           "top-left",
           "top-center",
@@ -876,7 +817,7 @@ console.log(this.numsTrangle.length);
           "middle-left",
           "bottom-left",
           "bottom-center",
-          "bottom-right",
+          "bottom-right"
         ]);
         tr.rotateEnabled(true);
         this.chaneID = star.id();
@@ -950,7 +891,7 @@ console.log(this.numsTrangle.length);
         shadowOffset: { x: shadowOffsetX, y: shadowOffsetY },
         shadowOpacity: 0.5,
         draggable: true,
-        id: idName,
+        id: idName
       });
 
       this.chaneID = rect.id();
@@ -988,12 +929,12 @@ console.log(this.numsTrangle.length);
         id: sum,
         type: "rectangle",
         count: parseInt(this.numsRect.length),
-        ran: this.numsRect[num-1],
+        ran: this.numsRect[num - 1]
       };
       this.arrLayer.push(params);
       this.$refs.layers._data.numItem++;
 
-      rect.on("dragmove", (event) => {
+      rect.on("dragmove", event => {
         ////(rect.attrs.x);
         this.x = Math.round(rect.attrs.x);
         this.y = Math.round(rect.attrs.y);
@@ -1012,7 +953,7 @@ console.log(this.numsTrangle.length);
         this.y = Math.round(rect.attrs.y);
       });
 
-      rect.on("transform", (event) => {
+      rect.on("transform", event => {
         this.x = Math.round(rect.attrs.x);
         this.y = Math.round(rect.attrs.y);
         this.width = Math.round(rect.width() * rect.scaleX());
@@ -1032,7 +973,7 @@ console.log(this.numsTrangle.length);
         // //(this.width);
       });
 
-      this.stage.on("click", (event) => {
+      this.stage.on("click", event => {
         if (
           event.evt.layerX <= this.x - 20 ||
           event.evt.layerX >= this.x + this.width + 20 ||
@@ -1045,7 +986,7 @@ console.log(this.numsTrangle.length);
         }
       });
 
-      rect.on("click", (event) => {
+      rect.on("click", event => {
         tr.enabledAnchors([
           "top-left",
           "top-center",
@@ -1054,7 +995,7 @@ console.log(this.numsTrangle.length);
           "middle-left",
           "bottom-left",
           "bottom-center",
-          "bottom-right",
+          "bottom-right"
         ]);
         tr.rotateEnabled(true);
         this.chaneID = rect.id();
@@ -1131,7 +1072,7 @@ console.log(this.numsTrangle.length);
         shadowOffset: { x: shadowOffsetX, y: shadowOffsetY },
         shadowOpacity: 0.5,
         draggable: true,
-        id: idName,
+        id: idName
       });
 
       this.chaneID = circle.id();
@@ -1168,12 +1109,12 @@ console.log(this.numsTrangle.length);
         id: sum,
         type: "circular",
         count: parseInt(this.numsCircle.length),
-        ran: this.numsCircle[num-1]
+        ran: this.numsCircle[num - 1]
       };
       this.arrLayer.push(params);
       this.$refs.layers._data.numItem++;
 
-      circle.on("dragmove", (event) => {
+      circle.on("dragmove", event => {
         this.x = Math.round(circle.attrs.x);
         this.y = Math.round(circle.attrs.y);
         this.width = Math.round(circle.width() * circle.scaleX());
@@ -1191,7 +1132,7 @@ console.log(this.numsTrangle.length);
         this.y = Math.round(circle.attrs.y);
       });
 
-      circle.on("transform", (event) => {
+      circle.on("transform", event => {
         this.x = Math.round(circle.attrs.x);
         this.y = Math.round(circle.attrs.y);
         this.width = Math.round(circle.width() * circle.scaleX());
@@ -1208,7 +1149,7 @@ console.log(this.numsTrangle.length);
         this.width = Math.round(circle.width() * circle.scaleX());
         this.height = Math.abs(Math.round(circle.height() * circle.scaleY()));
       });
-      this.stage.on("click", (event) => {
+      this.stage.on("click", event => {
         if (
           event.evt.layerX <= this.x - 20 ||
           event.evt.layerX >= this.x + this.width + 20 ||
@@ -1221,7 +1162,7 @@ console.log(this.numsTrangle.length);
         }
       });
 
-      circle.on("click", (event) => {
+      circle.on("click", event => {
         tr.enabledAnchors([
           "top-left",
           "top-center",
@@ -1230,7 +1171,7 @@ console.log(this.numsTrangle.length);
           "middle-left",
           "bottom-left",
           "bottom-center",
-          "bottom-right",
+          "bottom-right"
         ]);
         tr.rotateEnabled(true);
         this.chaneID = circle.id();
@@ -1309,7 +1250,7 @@ console.log(this.numsTrangle.length);
         draggable: true,
         shadowColor: shadowColor,
         //closed: trueD
-        id: idName,
+        id: idName
       });
 
       this.chaneID = line.id();
@@ -1354,11 +1295,11 @@ console.log(this.numsTrangle.length);
         id: sum,
         type: "triangle",
         count: parseInt(this.numsTrangle.length),
-        ran: this.numsTrangle[num-1],
+        ran: this.numsTrangle[num - 1]
       };
       this.arrLayer.push(params);
       this.$refs.layers._data.numItem++;
-      line.on("dragmove", (event) => {
+      line.on("dragmove", event => {
         ////(rect.attrs.x);
         this.x = Math.round(line.attrs.x);
         this.y = Math.round(line.attrs.y);
@@ -1377,7 +1318,7 @@ console.log(this.numsTrangle.length);
         this.y = Math.round(line.attrs.y);
       });
 
-      line.on("transform", (event) => {
+      line.on("transform", event => {
         this.x = Math.round(line.attrs.x);
         this.y = Math.round(line.attrs.y);
         this.width = Math.round(line.width() * line.scaleX());
@@ -1397,7 +1338,7 @@ console.log(this.numsTrangle.length);
         // //(this.width);
       });
 
-      this.stage.on("click", (event) => {
+      this.stage.on("click", event => {
         if (
           event.evt.layerX <= this.x - 20 ||
           event.evt.layerX >= this.x + this.width + 20 ||
@@ -1410,7 +1351,7 @@ console.log(this.numsTrangle.length);
         }
       });
 
-      line.on("click", (event) => {
+      line.on("click", event => {
         tr.enabledAnchors([
           "top-left",
           "top-center",
@@ -1419,7 +1360,7 @@ console.log(this.numsTrangle.length);
           "middle-left",
           "bottom-left",
           "bottom-center",
-          "bottom-right",
+          "bottom-right"
         ]);
         tr.rotateEnabled(true);
         this.chaneID = line.id();
@@ -1537,19 +1478,19 @@ console.log(this.numsTrangle.length);
         }
         //(this.numsStar.length);
       }
-    },
+    }
   },
 
   mounted() {
     this.stage = new Konva.Stage({
       container: "container", // id of container <div>
       width: 1274,
-      height: 1000,
+      height: 1000
     });
     var tween;
     // this.$store.dispatch('reqrequestLayers')
     this.initialLayers();
     this.layer = new Konva.Layer();
-  },
+  }
 };
 </script>

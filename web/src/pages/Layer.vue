@@ -2,10 +2,11 @@
   <div class="left_panel">
     <div class="left_panel-layers">
       <el-col :span="12">
-        <div style="height: 30px; line-height: 30px; border: 1px solid #e5e5e5">
-          <span style="font-size: 10px">Layers</span>
+        <div style="border: 2px solid #e5e5e5">
+          <span style="font-size: 30px">图 层</span>
         </div>
         <el-menu
+          style="font-size:30px ! important;"
           default-active="2"
           class="el-menu-vertical-demo"
           background-color="#fff"
@@ -81,10 +82,13 @@
   float: right;
 }
 .left_panel {
-  width: 380px;
+  width: 100%;
+}
+.el-col-12 {
+  width: 100%;
 }
 .el-menu-item {
-  height: 36px;
+  height: 40px;
   line-height: 36px;
 }
 .layers_before-rectangle::before {
@@ -148,7 +152,7 @@
 }
 .layers-content {
   float: left;
-  font-size: 12px;
+  font-size: 20px;
 }
 li {
   list-style: none;
