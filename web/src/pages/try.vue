@@ -1486,7 +1486,7 @@ export default {
         username: this.username,
       });
       // alert(this.$store.state.layers[0].pageId);
-      this.arr = await this.$store.state.layers;
+      this.arr = this.$store.state.layers;
       if(this.arr.length == 0){
         return;
       }

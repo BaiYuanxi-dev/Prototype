@@ -107,7 +107,6 @@ export default new Vuex.Store({
 
         async setLayers(state, value) {
             // state.layers = layers;
-            console.log(value.data);
             // console.log(value.ids);
             let len = value.data.length;
             for (let i = 0; i < len; i++) {
