@@ -3,8 +3,7 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
+const routes = [{
     path: '/',
     redirect: '/login'
   },
@@ -29,9 +28,9 @@ const routes = [
     component: () => import('../pages/login')
   },
   {
-    path:'/mytable',
+    path: '/mytable',
     name: 'mytable',
-    component:() => import('../pages/mytable')
+    component: () => import('../pages/mytable')
   }
 ]
 
@@ -41,18 +40,18 @@ const router = new VueRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   if (to.path === '/login') {
-//     next();
-//   } else {
-//     let token = localStorage.getItem('Authorization');
- 
-//     if (token === null || token === '') {
-//       next('/login');
-//     } else {
-//       next();
-//     }
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  if (to.path === '/Login') {
+    next();
+  } else {
+    let token = localStorage.getItem('token');
+
+    if (token === 'null' || token === '') {
+      next('/Login');
+    } else {
+      next();
+    }
+  }
+});
 
 export default router

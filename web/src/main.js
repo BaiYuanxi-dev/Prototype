@@ -10,6 +10,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 import VueKonva from 'vue-konva'
 import "./assets/all.css"
 import "element-ui/lib/theme-chalk/display.css";
+import axios from 'axios'
+Vue.prototype.$http = axios;
+axios.defaults.headers['token'] = localStorage.getItem('token') || ''
 
 Vue.use(VueKonva)
 Vue.use(ElementUI);

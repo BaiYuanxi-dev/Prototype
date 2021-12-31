@@ -34,15 +34,13 @@
                 ''
               )
             "
-            >矩形</el-menu-item
-          >
+          >矩形</el-menu-item>
           <el-menu-item
             index="2-2"
             @click="
               getCircle(200, 300, 50, '#fff', '#000', 1, '#000', 10, 10, 10, '')
             "
-            >圆形</el-menu-item
-          >
+          >圆形</el-menu-item>
           <el-menu-item
             index="2-3"
             @click="
@@ -61,8 +59,7 @@
                 ''
               )
             "
-            >三角形</el-menu-item
-          >
+          >三角形</el-menu-item>
           <el-menu-item
             index="2-4"
             @click="
@@ -81,8 +78,7 @@
                 ''
               )
             "
-            >星形</el-menu-item
-          >
+          >星形</el-menu-item>
           <el-menu-item index="2-5">文字</el-menu-item>
         </el-submenu>
 
@@ -97,14 +93,7 @@
     </div>
     <div class="main">
       <el-row :gutter="10">
-        <el-col
-          :xs="4"
-          :sm="4"
-          :md="3"
-          :lg="3"
-          :xl="1"
-          class="hidden-md-and-down"
-        >
+        <el-col :xs="4" :sm="4" :md="3" :lg="3" :xl="1" class="hidden-md-and-down">
           <div class="a">
             <el-col :span="12">
               <layers
@@ -140,28 +129,16 @@
                 </div>
                 <div class="w">
                   w:
-                  <input
-                    type="text"
-                    v-model="width"
-                    @change="change()"
-                    id="X"
-                  />
+                  <input type="text" v-model="width" @change="change()" id="X" />
                 </div>
                 <div class="h">
                   h:
-                  <input
-                    type="text"
-                    v-model="height"
-                    @change="change()"
-                    id="X"
-                  />
+                  <input type="text" v-model="height" @change="change()" id="X" />
                 </div>
               </div>
             </div>
             <div>
-              <h4 style="font-weight: 300; font-size: 14px; margin-top: 20px">
-                背景色
-              </h4>
+              <h4 style="font-weight: 300; font-size: 14px; margin-top: 20px">背景色</h4>
               <div>
                 颜色
                 <el-color-picker
@@ -180,9 +157,7 @@
               <!-- <div class="demonstration" style="margin:20px 0">颜色</div> -->
             </div>
             <div>
-              <h4 style="font-weight: 300; font-size: 14px; margin-top: 20px">
-                边框
-              </h4>
+              <h4 style="font-weight: 300; font-size: 14px; margin-top: 20px">边框</h4>
               <div>
                 颜色
                 <el-color-picker
@@ -190,8 +165,7 @@
                   @change="changeColor1()"
                   size="large"
                   style="display: block; margin-bottom: 10px"
-                ></el-color-picker
-                >粗细
+                ></el-color-picker>粗细
                 <input
                   type="text"
                   style="border-radius: 5px; width: 100px"
@@ -288,13 +262,12 @@ h4 {
 .btn_back {
   background-color: transparent;
   border-style: none;
-  color:white;
+  color: white;
 }
 .grid-content {
   border-radius: 4px;
   min-height: 36px;
 }
-
 
 #X {
   padding: 5px 0;
@@ -364,21 +337,21 @@ export default {
 
       pageId: -1,
       projectId: -1,
-      username: -1,
+      username: -1
     };
   },
 
   methods: {
-    backToPage(){
-      this.arr=[];
+    backToPage() {
+      this.arr = [];
       this.$store.state.layers = [];
       this.$router.push({
-        name:'mtpg1',
-        query:{
+        name: "mtpg1",
+        query: {
           username: this.username,
-          projectId: this.projectId,
+          projectId: this.projectId
         }
-      })
+      });
     },
     destroy(idd) {
       let shape = this.stage.find(idd)[0];
@@ -393,7 +366,7 @@ export default {
       let shape = this.stage.find(idd)[0];
       shape.show();
     },
-    itemshow: function (name_count) {
+    itemshow: function(name_count) {
       //("我收到了" + name_count);
       this.$refs.layers._data.numItem--;
       // this.numItem--;
@@ -413,7 +386,7 @@ export default {
       this.show(this.idd);
     },
 
-    itemDelete: function (name_count) {
+    itemDelete: function(name_count) {
       // console.log(name_count);
       this.$refs.layers._data.numItem--;
       // this.numItem--;
@@ -462,7 +435,7 @@ export default {
       }
       this.destroy(this.idd);
     },
-    itemhide: function (name_count) {
+    itemhide: function(name_count) {
       //("我收到了" + name_count);
       this.$refs.layers._data.numItem--;
       // this.numItem--;
@@ -515,7 +488,7 @@ export default {
           shadowOffsetY,
           width,
           x_co,
-          y_co,
+          y_co
         });
       }
 
@@ -553,7 +526,7 @@ export default {
           shadowOffsetY,
           width,
           x_co,
-          y_co,
+          y_co
         });
       }
 
@@ -592,7 +565,7 @@ export default {
           shadowOffsetY,
           width,
           x_co,
-          y_co,
+          y_co
         });
       }
 
@@ -625,7 +598,7 @@ export default {
           shadowOffsetY,
           width,
           x_co,
-          y_co,
+          y_co
         });
       }
       // //(this.rect.length);
@@ -645,7 +618,7 @@ export default {
         arr: this.allGraphs,
         pageId: this.pageId,
         projectId: this.projectId,
-        username: this.username,
+        username: this.username
       };
       //(this.allGraphs);
       await this.$store.dispatch("addGraph", param);
@@ -720,7 +693,7 @@ export default {
         duration: 0,
         x: Math.round(this.x),
         y: Math.round(this.y),
-        easing: Konva.Easings.Linear,
+        easing: Konva.Easings.Linear
       });
       tween.play();
       ////(tween.node.attrs.width);
@@ -731,7 +704,8 @@ export default {
       var text = new Konva.Text({
         x: 20,
         y: 60,
-        text: "COMPLEX TEXT\n\nAll the world's a stage, and all the men and women merely players. They have their exits and their entrances.",
+        text:
+          "COMPLEX TEXT\n\nAll the world's a stage, and all the men and women merely players. They have their exits and their entrances.",
         fontSize: 38,
         fontFamily: "Calibri",
         fill: "#555",
@@ -740,7 +714,7 @@ export default {
         align: "center",
         //shadowOffset: { x: 10, y: 10 },
         stroke: "red",
-        strokeWidth: 1,
+        strokeWidth: 1
       });
 
       this.layer.add(text);
@@ -793,7 +767,7 @@ export default {
         shadowOpacity: 0.5,
         draggable: true,
         shadowColor: shadowColor,
-        id: idName,
+        id: idName
       });
 
       this.chaneID = star.id();
@@ -833,13 +807,13 @@ export default {
         id: sum,
         type: "star",
         count: parseInt(this.numsStar.length),
-        ran: this.numsStar[num],
+        ran: this.numsStar[num]
       };
       this.arrLayer.push(params);
 
       // console.log("params", params);
       this.$refs.layers._data.numItem++;
-      star.on("dragmove", (event) => {
+      star.on("dragmove", event => {
         ////()
         this.x = Math.round(star.attrs.x);
         this.y = Math.round(star.attrs.y);
@@ -858,7 +832,7 @@ export default {
         this.y = Math.round(star.attrs.y);
       });
 
-      star.on("transform", (event) => {
+      star.on("transform", event => {
         this.x = Math.round(star.attrs.x);
         this.y = Math.round(star.attrs.y);
         this.width = Math.round(star.width() * star.scaleX());
@@ -877,7 +851,7 @@ export default {
         ////(this.height);
       });
 
-      this.stage.on("click", (event) => {
+      this.stage.on("click", event => {
         ////(event.evt.layerX);
         if (
           event.evt.layerX <= this.x - 20 ||
@@ -891,7 +865,7 @@ export default {
         }
       });
 
-      star.on("click", (event) => {
+      star.on("click", event => {
         tr.enabledAnchors([
           "top-left",
           "top-center",
@@ -900,7 +874,7 @@ export default {
           "middle-left",
           "bottom-left",
           "bottom-center",
-          "bottom-right",
+          "bottom-right"
         ]);
         tr.rotateEnabled(true);
         this.chaneID = star.id();
@@ -974,7 +948,7 @@ export default {
         shadowOffset: { x: shadowOffsetX, y: shadowOffsetY },
         shadowOpacity: 0.5,
         draggable: true,
-        id: idName,
+        id: idName
       });
 
       this.chaneID = rect.id();
@@ -1013,14 +987,14 @@ export default {
         type: "rectangle",
         count: parseInt(this.numsRect.length),
 
-        ran: this.numsRect[num],
+        ran: this.numsRect[num]
       };
       // console.log("sum", params.id);
       this.arrLayer.push(params);
 
       this.$refs.layers._data.numItem++;
 
-      rect.on("dragmove", (event) => {
+      rect.on("dragmove", event => {
         ////(rect.attrs.x);
         this.x = Math.round(rect.attrs.x);
         this.y = Math.round(rect.attrs.y);
@@ -1039,7 +1013,7 @@ export default {
         this.y = Math.round(rect.attrs.y);
       });
 
-      rect.on("transform", (event) => {
+      rect.on("transform", event => {
         this.x = Math.round(rect.attrs.x);
         this.y = Math.round(rect.attrs.y);
         this.width = Math.round(rect.width() * rect.scaleX());
@@ -1059,7 +1033,7 @@ export default {
         // //(this.width);
       });
 
-      this.stage.on("click", (event) => {
+      this.stage.on("click", event => {
         if (
           event.evt.layerX <= this.x - 20 ||
           event.evt.layerX >= this.x + this.width + 20 ||
@@ -1072,7 +1046,7 @@ export default {
         }
       });
 
-      rect.on("click", (event) => {
+      rect.on("click", event => {
         tr.enabledAnchors([
           "top-left",
           "top-center",
@@ -1081,7 +1055,7 @@ export default {
           "middle-left",
           "bottom-left",
           "bottom-center",
-          "bottom-right",
+          "bottom-right"
         ]);
         tr.rotateEnabled(true);
         this.chaneID = rect.id();
@@ -1156,7 +1130,7 @@ export default {
         shadowOffset: { x: shadowOffsetX, y: shadowOffsetY },
         shadowOpacity: 0.5,
         draggable: true,
-        id: idName,
+        id: idName
       });
 
       this.chaneID = circle.id();
@@ -1191,12 +1165,12 @@ export default {
         id: sum,
         type: "circular",
         count: parseInt(this.numsCircle.length),
-        ran: this.numsCircle[num - 1],
+        ran: this.numsCircle[num - 1]
       };
       this.arrLayer.push(params);
       this.$refs.layers._data.numItem++;
 
-      circle.on("dragmove", (event) => {
+      circle.on("dragmove", event => {
         this.x = Math.round(circle.attrs.x);
         this.y = Math.round(circle.attrs.y);
         this.width = Math.round(circle.width() * circle.scaleX());
@@ -1214,7 +1188,7 @@ export default {
         this.y = Math.round(circle.attrs.y);
       });
 
-      circle.on("transform", (event) => {
+      circle.on("transform", event => {
         this.x = Math.round(circle.attrs.x);
         this.y = Math.round(circle.attrs.y);
         this.width = Math.round(circle.width() * circle.scaleX());
@@ -1231,7 +1205,7 @@ export default {
         this.width = Math.round(circle.width() * circle.scaleX());
         this.height = Math.abs(Math.round(circle.height() * circle.scaleY()));
       });
-      this.stage.on("click", (event) => {
+      this.stage.on("click", event => {
         if (
           event.evt.layerX <= this.x - 20 ||
           event.evt.layerX >= this.x + this.width + 20 ||
@@ -1244,7 +1218,7 @@ export default {
         }
       });
 
-      circle.on("click", (event) => {
+      circle.on("click", event => {
         tr.enabledAnchors([
           "top-left",
           "top-center",
@@ -1253,7 +1227,7 @@ export default {
           "middle-left",
           "bottom-left",
           "bottom-center",
-          "bottom-right",
+          "bottom-right"
         ]);
         tr.rotateEnabled(true);
         this.chaneID = circle.id();
@@ -1332,7 +1306,7 @@ export default {
         draggable: true,
         shadowColor: shadowColor,
         //closed: trueD
-        id: idName,
+        id: idName
       });
 
       this.chaneID = line.id();
@@ -1378,11 +1352,11 @@ export default {
         type: "triangle",
         count: parseInt(this.numsTrangle.length),
 
-        ran: this.numsTrangle[num - 1],
+        ran: this.numsTrangle[num - 1]
       };
       this.arrLayer.push(params);
       this.$refs.layers._data.numItem++;
-      line.on("dragmove", (event) => {
+      line.on("dragmove", event => {
         this.x = Math.round(line.attrs.x);
         this.y = Math.round(line.attrs.y);
         this.width = Math.round(line.width() * line.scaleX());
@@ -1400,7 +1374,7 @@ export default {
         this.y = Math.round(line.attrs.y);
       });
 
-      line.on("transform", (event) => {
+      line.on("transform", event => {
         this.x = Math.round(line.attrs.x);
         this.y = Math.round(line.attrs.y);
         this.width = Math.round(line.width() * line.scaleX());
@@ -1420,7 +1394,7 @@ export default {
         // //(this.width);
       });
 
-      this.stage.on("click", (event) => {
+      this.stage.on("click", event => {
         if (
           event.evt.layerX <= this.x - 20 ||
           event.evt.layerX >= this.x + this.width + 20 ||
@@ -1433,7 +1407,7 @@ export default {
         }
       });
 
-      line.on("click", (event) => {
+      line.on("click", event => {
         tr.enabledAnchors([
           "top-left",
           "top-center",
@@ -1442,7 +1416,7 @@ export default {
           "middle-left",
           "bottom-left",
           "bottom-center",
-          "bottom-right",
+          "bottom-right"
         ]);
         tr.rotateEnabled(true);
         this.chaneID = line.id();
@@ -1483,14 +1457,16 @@ export default {
       await this.$store.dispatch("requestLayers", {
         pageId: this.pageId,
         projectId: this.projectId,
-        username: this.username,
+        username: this.username
       });
-      // alert(this.$store.state.layers[0].pageId);
       this.arr = this.$store.state.layers;
-      if(this.arr.length == 0){
+      console.log("arr", this.arr);
+      // alert(this.$store.state.layers[0].pageId);
+      this.arr = await this.$store.state.layers;
+      if (this.arr.length == 0) {
         return;
       }
-      console.log("arr", this.pageId,  this.arr);
+      console.log("arr", this.pageId, this.arr);
       //(this.arr);
       this.arrId = this.$store.state.ids;
       ////(this.arrId);
@@ -1499,6 +1475,7 @@ export default {
         if (this.arrId[i].indexOf("myRect") == 0) {
           this.rectId.push(this.arrId[i]);
           this.numsRect.push(this.arrId[i].slice(6));
+
           //(this.numsRect);
           this.getRectangle(
             this.arr[i].x_co,
@@ -1571,19 +1548,19 @@ export default {
         }
         //(this.numsStar.length);
       }
-    },
+    }
   },
 
   mounted() {
     this.stage = new Konva.Stage({
       container: "container", // id of container <div>
       width: 1274,
-      height: 1000,
+      height: 1000
     });
     var tween;
     // this.$store.dispatch('reqrequestLayers')
     this.initialLayers();
     this.layer = new Konva.Layer();
-  },
+  }
 };
 </script>

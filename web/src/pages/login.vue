@@ -5,7 +5,7 @@
         fill="#0099ff"
         fill-opacity="1"
         d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-      ></path>
+      />
     </svg>
     <div class="user">
       <i class="fa fa-user"></i>
@@ -16,17 +16,11 @@
         <div class="form-content">
           <div class="avtar">
             <div class="pic">
-              <img src="../assets/img/img-l-1.jpg" alt="" />
+              <img src="../assets/img/img-l-1.jpg" alt />
             </div>
           </div>
           <h1>Welcome back</h1>
-          <el-form
-            :model="ruleForm"
-            status-icon
-            :rules="rules"
-            ref="ruleForm"
-            class="form"
-          >
+          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="form">
             <el-form-item prop="username">
               <el-input
                 prefix-icon="el-icon-user-solid"
@@ -44,20 +38,13 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button
-                type="primary"
-                @click="submitForm('ruleForm')"
-                class="custom-btn btn-3"
-                >登录</el-button
-              >
+              <el-button type="primary" @click="submitForm('ruleForm')" class="custom-btn btn-3">登录</el-button>
             </el-form-item>
           </el-form>
 
           <p class="btn-something">
             Don't have an account ?
-            <span ref="tosignup" class="signupbtn" @click="toSignup"
-              >signup</span
-            >
+            <span ref="tosignup" class="signupbtn" @click="toSignup">signup</span>
           </p>
         </div>
       </div>
@@ -65,7 +52,7 @@
         <div class="form-content">
           <div class="avtar">
             <div class="pic">
-              <img src="../assets/img/img-l-2.jpg" alt="" />
+              <img src="../assets/img/img-l-2.jpg" alt />
             </div>
           </div>
           <h1>Let's get started</h1>
@@ -108,8 +95,7 @@
                 type="primary"
                 @click="submitRegisterForm('registRuleForm')"
                 class="custom-btn btn-3"
-                >注册</el-button
-              >
+              >注册</el-button>
             </el-form-item>
           </el-form>
           <p class="btn-something">
@@ -123,6 +109,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   data() {
     var checkusername = (rule, value, callback) => {
@@ -169,22 +156,22 @@ export default {
     return {
       ruleForm: {
         pass: "",
-        username: "",
+        username: ""
       },
       rules: {
         pass: [{ validator: validatePass0, trigger: "blur" }],
-        username: [{ validator: checkusername, trigger: "blur" }],
+        username: [{ validator: checkusername, trigger: "blur" }]
       },
       registRuleForm: {
         pass: "",
         checkPass: "",
-        username: "",
+        username: ""
       },
       rules2: {
         pass: [{ validator: validatePass, trigger: "blur" }],
         checkPass: [{ validator: validatePass2, trigger: "blur" }],
-        username: [{ validator: checkusername, trigger: "blur" }],
-      },
+        username: [{ validator: checkusername, trigger: "blur" }]
+      }
     };
   },
   methods: {
@@ -193,13 +180,15 @@ export default {
         s
       );
     },
+    ...mapMutations(["changeLogin"]),
     async submitForm(formName) {
       let params = {
         username: "",
-        password: "",
+        password: ""
       };
+      let _this = this;
       let couldSub = false;
-      await this.$refs[formName].validate().then(async (valid) => {
+      await this.$refs[formName].validate().then(async valid => {
         if (valid) {
           params.username = this.ruleForm.username;
           params.password = this.ruleForm.pass;
@@ -218,11 +207,15 @@ export default {
         loginState = this.$store.state.login;
         if (loginState == 200) {
           // alert("登录成功");
+          _this.userToken = "this.params";
+          // 将用户token保存到vuex中
+          _this.changeLogin({ token: _this.userToken });
+          // window.localStorage.setItem("token", _this.userToken); //将token存储到window上
           this.$router.push({
             name: "ImageList",
             query: {
-              username: this.ruleForm.username,
-            },
+              username: this.ruleForm.username
+            }
           });
         } else if (loginState == 401) {
           alert("用户名不存在");
@@ -237,10 +230,10 @@ export default {
     async submitRegisterForm(formName) {
       let params = {
         username: "",
-        password: "",
+        password: ""
       };
       let couldSub = false;
-      await this.$refs[formName].validate().then(async(valid) => {
+      await this.$refs[formName].validate().then(async valid => {
         if (valid) {
           params.username = this.registRuleForm.username;
           params.password = this.registRuleForm.pass;
@@ -273,8 +266,8 @@ export default {
       this.$refs.login.style.transform = "rotateY(0deg)";
       this.$refs.signup.style.transform = "rotateY(-180deg)";
       this.$refs.head.innerHTML = "account login";
-    },
-  },
+    }
+  }
 };
 </script>
 
