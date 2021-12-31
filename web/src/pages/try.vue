@@ -86,7 +86,8 @@
           <a href="#" target="_blank">帮助</a>
         </el-menu-item>
         <el-menu-item index="4">
-          <a href="#" target="_blank">返回</a>
+          <button class="btn_back" @click="backToPage">返回</button>
+          <!-- <a href="#" target="_blank">返回</a> -->
         </el-menu-item>
       </el-menu>
     </div>
@@ -98,7 +99,11 @@
               <layers
                 :layers="arrLayer"
                 :numItems="numItem"
-                v-on="{itemDelete:itemDelete ,itemhide:itemhide, itemshow:itemshow}"
+                v-on="{
+                  itemDelete: itemDelete,
+                  itemhide: itemhide,
+                  itemshow: itemshow,
+                }"
                 ref="layers"
               ></layers>
             </el-col>
@@ -254,6 +259,11 @@ h4 {
 .el-col {
   border-radius: 4px;
 }
+.btn_back {
+  background-color: transparent;
+  border-style: none;
+  color: white;
+}
 .grid-content {
   border-radius: 4px;
   min-height: 36px;
@@ -332,6 +342,17 @@ export default {
   },
 
   methods: {
+    backToPage() {
+      this.arr = [];
+      this.$store.state.layers = [];
+      this.$router.push({
+        name: "mtpg1",
+        query: {
+          username: this.username,
+          projectId: this.projectId
+        }
+      });
+    },
     destroy(idd) {
       let shape = this.stage.find(idd)[0];
       // console.log(this.numsCircle);
@@ -487,11 +508,11 @@ export default {
         let x_co = shape.attrs.x;
         let y_co = shape.attrs.y;
 
-        console.log("ddddddddddd");
-        console.log(shape.attrs.stroke);
-        console.log(shape.attrs);
-        console.log("ddddddddddd");
-        console.log(borderWidth);
+        // console.log("ddddddddddd");
+        // console.log(shape.attrs.stroke);
+        // console.log(shape.attrs);
+        // console.log("ddddddddddd");
+        // console.log(borderWidth);
 
         this.allGraphs.push({
           layerId,
@@ -548,7 +569,7 @@ export default {
         });
       }
 
-      console.log(this.numsTrangle.length);
+      // console.log(this.numsTrangle.length);
       for (let i = 0; i < this.numsTrangle.length; i++) {
         let shape = this.stage.find("#myTrangle" + this.numsTrangle[i])[0];
         //(this.stage.find("#myTrangle" + this.numsTrangle[i])[0]);
@@ -781,7 +802,7 @@ export default {
       //(this.numsStar.length);
       //("star");
       //(sum);
-      console.log(num + " ...........");
+      // console.log(num + " ...........");
       let params = {
         id: sum,
         type: "star",
@@ -790,7 +811,7 @@ export default {
       };
       this.arrLayer.push(params);
 
-      console.log("params", params);
+      // console.log("params", params);
       this.$refs.layers._data.numItem++;
       star.on("dragmove", event => {
         ////()
@@ -968,7 +989,7 @@ export default {
 
         ran: this.numsRect[num]
       };
-      console.log("sum", params.id);
+      // console.log("sum", params.id);
       this.arrLayer.push(params);
 
       this.$refs.layers._data.numItem++;
@@ -1092,7 +1113,7 @@ export default {
           }
         }
         idName = "mycircle" + String(this.numsCircle[num]);
-        alert(idName);
+        // alert(idName);
       }
       //("circleNum");
       //(num);
@@ -1139,7 +1160,7 @@ export default {
         this.numsStar.length +
         this.numsTrangle.length +
         this.numsText.length;
-      alert(sum);
+      // alert(sum);
       let params = {
         id: sum,
         type: "circular",
@@ -1440,6 +1461,12 @@ export default {
       });
       this.arr = this.$store.state.layers;
       console.log("arr", this.arr);
+      // alert(this.$store.state.layers[0].pageId);
+      this.arr = await this.$store.state.layers;
+      if (this.arr.length == 0) {
+        return;
+      }
+      console.log("arr", this.pageId, this.arr);
       //(this.arr);
       this.arrId = this.$store.state.ids;
       ////(this.arrId);

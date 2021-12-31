@@ -113,19 +113,19 @@ export default new Vuex.Store({
         },
 
 
-        setLayers(state, value) {
+        async setLayers(state, value) {
             // state.layers = layers;
             console.log(value.data);
             // console.log(value.ids);
             let len = value.data.length;
             for (let i = 0; i < len; i++) {
-                state.layers.push(value.data[i]);
+                await state.layers.push(value.data[i]);
             }
             len = value.ids.length;
             for (let i = 0; i < len; i++) {
-                state.ids.push(value.ids[i].layerId);
+                await state.ids.push(value.ids[i].layerId);
             }
-            console.log(state.ids);
+            // console.log(state.ids);
         },
     },
     actions: {
@@ -244,7 +244,7 @@ export default new Vuex.Store({
                 projectId: payload.projectId,
                 username: payload.username,
             });
-            await context.commit('setLayers', value);
+            context.commit('setLayers', value);
         },
 
 
@@ -254,7 +254,8 @@ export default new Vuex.Store({
             await reqInstance.post('/layers/addGraph', {
                 pageId: payload.pageId,
                 projectId: payload.projectId,
-                rect: payload.arr
+                rect: payload.arr,
+                username: payload.username,
             });
         },
 

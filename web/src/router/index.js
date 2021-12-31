@@ -5,8 +5,7 @@ Vue.use(VueRouter)
 
 const routes = [{
     path: '/',
-    name: 'Login',
-    component: () => import('../pages/login')
+    redirect: '/login'
   },
   {
     path: '/ImageList',
@@ -27,6 +26,11 @@ const routes = [{
     path: '/Login',
     name: 'Login',
     component: () => import('../pages/login')
+  },
+  {
+    path: '/mytable',
+    name: 'mytable',
+    component: () => import('../pages/mytable')
   }
 ]
 
