@@ -6,8 +6,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Login',
-    component: () => import('../pages/login')
+    redirect: '/login'
   },
   {
     path: '/ImageList',
@@ -28,6 +27,11 @@ const routes = [
     path: '/Login',
     name: 'Login',
     component: () => import('../pages/login')
+  },
+  {
+    path:'/mytable',
+    name: 'mytable',
+    component:() => import('../pages/mytable')
   }
 ]
 
@@ -36,5 +40,19 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+// router.beforeEach((to, from, next) => {
+//   if (to.path === '/login') {
+//     next();
+//   } else {
+//     let token = localStorage.getItem('Authorization');
+ 
+//     if (token === null || token === '') {
+//       next('/login');
+//     } else {
+//       next();
+//     }
+//   }
+// });
 
 export default router
