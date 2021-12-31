@@ -17,23 +17,31 @@ export default new Vuex.Store({
         ids: [],
         login: 401,
         regist: 401,
+        // 存储token
+        token: localStorage.getItem('token') ? localStorage.getItem('token') : ''
     },
     mutations: {
-        setLogin(state, message){
+        // 修改token，并将token存入localStorage
+        changeLogin(state, user) {
+            state.token = user.token;
+            localStorage.setItem('token', user.token);
+        },
 
-            if(message == "ok"){
+        setLogin(state, message) {
+
+            if (message == "ok") {
                 state.login = 200;
-            } else if (message == "wrong username"){
+            } else if (message == "wrong username") {
                 state.login = 401;
-            } else if (message == "wrong password"){
+            } else if (message == "wrong password") {
                 state.login = 402;
             }
-            
+
         },
-        setRegist(state, message){
-            if(message == "ok"){
+        setRegist(state, message) {
+            if (message == "ok") {
                 state.regist = 200;
-            } else if (message == "exist username"){
+            } else if (message == "exist username") {
                 state.regist = 401;
             }
         },
@@ -96,7 +104,7 @@ export default new Vuex.Store({
             }
             state.pagesList.push(value);
         },
-        changePage(state, value){
+        changePage(state, value) {
             for (let i = 0; i < state.pagesList.length; i++) {
                 if (state.pagesList[i].pageId == value.pageId) {
                     state.pagesList.splice(i, 1, value);
@@ -121,19 +129,19 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        async login(context, payload){
-            let value =  await reqInstance.post('/sign/login', {
-                username: payload.username, 
-                password:payload.password
+        async login(context, payload) {
+            let value = await reqInstance.post('/sign/login', {
+                username: payload.username,
+                password: payload.password
             });
 
             context.commit('setLogin', value.message);
         },
 
-        async regist(context, payload){
+        async regist(context, payload) {
             let value = await reqInstance.post('/sign/regist', {
                 username: payload.username,
-                password:payload.password
+                password: payload.password
             });
             context.commit('setRegist', value.message);
         },
@@ -216,7 +224,7 @@ export default new Vuex.Store({
             if (value.message == "ok") {
                 context.commit('changePage', value.data[0]);
             }
-            
+
         },
         async deletePage(context, payload) {
             console.log("delete", payload.pageId, payload.projectId);
@@ -234,7 +242,7 @@ export default new Vuex.Store({
             let value = await reqInstance.post(`/layers/getLayer`, {
                 pageId: payload.pageId,
                 projectId: payload.projectId,
-                username:payload.username,
+                username: payload.username,
             });
             await context.commit('setLayers', value);
         },

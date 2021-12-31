@@ -3,8 +3,7 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
+const routes = [{
     path: '/',
     name: 'Login',
     component: () => import('../pages/login')
@@ -36,5 +35,19 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.path === '/Login') {
+    next();
+  } else {
+    let token = localStorage.getItem('token');
+
+    if (token === 'null' || token === '') {
+      next('/Login');
+    } else {
+      next();
+    }
+  }
+});
 
 export default router

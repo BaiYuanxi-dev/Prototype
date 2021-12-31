@@ -1439,7 +1439,7 @@ export default {
         username: this.username
       });
       this.arr = this.$store.state.layers;
-      console.log(this.arr);
+      console.log("arr", this.arr);
       //(this.arr);
       this.arrId = this.$store.state.ids;
       ////(this.arrId);
@@ -1448,6 +1448,7 @@ export default {
         if (this.arrId[i].indexOf("myRect") == 0) {
           this.rectId.push(this.arrId[i]);
           this.numsRect.push(this.arrId[i].slice(6));
+
           //(this.numsRect);
           this.getRectangle(
             this.arr[i].x_co,
