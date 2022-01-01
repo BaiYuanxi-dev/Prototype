@@ -1,112 +1,115 @@
 <template>
   <div class="all">
-    <div class="head">
-      <el-menu
-        :default-active="activeIndex2"
-        class="el-menu-demo"
-        mode="horizontal"
-        @select="handleSelect"
-        background-color="#545c64"
-        text-color="#fff"
-        active-text-color="#ffd04b"
-      >
-        <el-submenu index="1">
-          <template slot="title">文件</template>
-          <el-menu-item index="1-1" @click="save()">保存</el-menu-item>
-        </el-submenu>
-        <el-submenu index="2">
-          <template slot="title">置入</template>
-          <el-menu-item
-            index="2-1"
-            @click="
-              getRectangle(
-                200,
-                300,
-                200,
-                50,
-                '#fff',
-                '#000',
-                1,
-                '#000',
-                10,
-                10,
-                10,
-                ''
-              )
-            "
-          >矩形</el-menu-item>
-          <el-menu-item
-            index="2-2"
-            @click="
-              getCircle(200, 300, 50, '#fff', '#000', 1, '#000', 10, 10, 10, '')
-            "
-          >圆形</el-menu-item>
-          <el-menu-item
-            index="2-3"
-            @click="
-              getTrangle(
-                200,
-                300,
-                200,
-                50,
-                '#fff',
-                '#000',
-                1,
-                '#000',
-                10,
-                10,
-                10,
-                ''
-              )
-            "
-          >三角形</el-menu-item>
-          <el-menu-item
-            index="2-4"
-            @click="
-              getStar(
-                200,
-                300,
-                200,
-                200,
-                '#fff',
-                '#000',
-                1,
-                '#000',
-                10,
-                10,
-                10,
-                ''
-              )
-            "
-          >星形</el-menu-item>
-          <el-menu-item index="2-5" @click="getWord()">文字</el-menu-item>
-        </el-submenu>
-
-        <el-menu-item index="3">
-          <a href="#" target="_blank">帮助</a>
-        </el-menu-item>
-        <el-menu-item index="4">
-          <button class="btn_back" @click="backToPage">返回</button>
-          <!-- <a href="#" target="_blank">返回</a> -->
-        </el-menu-item>
-      </el-menu>
+    <div class="header0">
+      <div class="head">
+        <el-menu
+          :default-active="activeIndex2"
+          class="el-menu-demo"
+          mode="horizontal"
+          @select="handleSelect"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+        >
+          <el-submenu index="1">
+            <template slot="title">文件</template>
+            <el-menu-item index="1-1" @click="save()">保存</el-menu-item>
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title">置入</template>
+            <el-menu-item
+              index="2-1"
+              @click="
+          getRectangle(
+            200,
+            300,
+            200,
+            50,
+            '#fff',
+            '#000',
+            1,
+            '#000',
+            10,
+            10,
+            10,
+            ''
+          )
+        "
+            >矩形</el-menu-item>
+            <el-menu-item
+              index="2-2"
+              @click="
+          getCircle(200, 300, 50, '#fff', '#000', 1, '#000', 10, 10, 10, '')
+        "
+            >圆形</el-menu-item>
+            <el-menu-item
+              index="2-3"
+              @click="
+          getTrangle(
+            200,
+            300,
+            200,
+            50,
+            '#fff',
+            '#000',
+            1,
+            '#000',
+            10,
+            10,
+            10,
+            ''
+          )
+        "
+            >三角形</el-menu-item>
+            <el-menu-item
+              index="2-4"
+              @click="
+          getStar(
+            200,
+            300,
+            200,
+            200,
+            '#fff',
+            '#000',
+            1,
+            '#000',
+            10,
+            10,
+            10,
+            ''
+          )
+        "
+            >星形</el-menu-item>
+          </el-submenu>
+          <el-menu-item index="3">
+            <a href="#" target="_blank">帮助</a>
+          </el-menu-item>
+          <el-menu-item index="4">
+            <button class="btn_back" @click="backToPage">返回</button>
+            <!-- <a href="#" target="_blank">返回</a> -->
+          </el-menu-item>
+        </el-menu>
+      </div>
     </div>
+
     <div class="main">
       <Row :gutter="16">
         <Col :xs="4" :sm="4" :md="3" :lg="5" :xl="3" class="hidden-md-and-down">
-          <div class="a">
-            <el-col :span="12">
-              <layers
-                :layers="arrLayer"
-                :numItems="numItem"
-                v-on="{
-                  itemDelete: itemDelete,
-                  itemhide: itemhide,
-                  itemshow: itemshow,
-                }"
-                ref="layers"
-              ></layers>
-            </el-col>
+          <div class="aa">
+            <div class="a">
+              <el-col :span="12">
+                <layers
+                  :layers="arrLayer"
+                  :numItems="numItem"
+                  v-on="{
+                    itemDelete: itemDelete,
+                    itemhide: itemhide,
+                    itemshow: itemshow,
+                  }"
+                  ref="layers"
+                ></layers>
+              </el-col>
+            </div>
           </div>
         </Col>
         <Col :xs="18" :sm="20" :md="20" :lg="20" :xl="18">
@@ -115,101 +118,103 @@
           </div>
         </Col>
         <Col :xs="6" :sm="4" :md="4" :lg="4" :xl="3">
-          <div class="c">
-            <div>
-              <h4 style="font-size: 14px">参数</h4>
-              <div class="para">
-                <div class="x">
-                  x:
-                  <input type="text" v-model="x" @change="change()" id="X" />
-                </div>
-                <div class="y">
-                  y:
-                  <input type="text" v-model="y" @change="change()" id="X" />
-                </div>
-                <div class="w">
-                  w:
-                  <input type="text" v-model="width" @change="change()" id="X" />
-                </div>
-                <div class="h">
-                  h:
-                  <input type="text" v-model="height" @change="change()" id="X" />
+          <div class="cc">
+            <div class="c">
+              <div>
+                <h4 style="font-size: 14px">参数</h4>
+                <div class="para">
+                  <div class="x">
+                    x:
+                    <input type="text" v-model="x" @change="change()" id="X" />
+                  </div>
+                  <div class="y">
+                    y:
+                    <input type="text" v-model="y" @change="change()" id="X" />
+                  </div>
+                  <div class="w">
+                    w:
+                    <input type="text" v-model="width" @change="change()" id="X" />
+                  </div>
+                  <div class="h">
+                    h:
+                    <input type="text" v-model="height" @change="change()" id="X" />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div>
-              <h4 style="font-weight: 300; font-size: 14px; margin-top: 20px">背景色</h4>
               <div>
-                颜色
-                <el-color-picker
-                  v-model="color1"
-                  @change="changeColor()"
-                  size="large"
-                  style="display: block; margin-bottom: 10px"
-                ></el-color-picker>
-                <input
-                  type="text"
-                  style="border-radius: 5px; width: 100px"
-                  v-model="color"
-                  @change="Color()"
-                />
-              </div>
-              <!-- <div class="demonstration" style="margin:20px 0">颜色</div> -->
-            </div>
-            <div>
-              <h4 style="font-weight: 300; font-size: 14px; margin-top: 20px">边框</h4>
-              <div>
-                颜色
-                <el-color-picker
-                  v-model="color2"
-                  @change="changeColor1()"
-                  size="large"
-                  style="display: block; margin-bottom: 10px"
-                ></el-color-picker>粗细
-                <input
-                  type="text"
-                  style="border-radius: 5px; width: 100px"
-                  v-model="borderWidth"
-                  @change="changeWidth()"
-                />
-              </div>
-            </div>
-            <div>
-              <h4 style="font-weight: 300; font-size: 14px">阴影</h4>
-              <div>
-                颜色
-                <el-color-picker
-                  v-model="color3"
-                  @change="changeColor2()"
-                  size="large"
-                  style="display: block; margin-bottom: 10px"
-                ></el-color-picker>
+                <h4 style="font-size: 14px; margin-top: 20px">背景色</h4>
                 <div>
-                  x偏移
+                  颜色
+                  <el-color-picker
+                    v-model="color1"
+                    @change="changeColor()"
+                    size="large"
+                    style="display: block; margin-bottom: 10px"
+                  ></el-color-picker>
                   <input
                     type="text"
                     style="border-radius: 5px; width: 100px"
-                    v-model="x1"
-                    @change="changeX()"
+                    v-model="color"
+                    @change="Color()"
                   />
                 </div>
+                <!-- <div class="demonstration" style="margin:20px 0">颜色</div> -->
+              </div>
+              <div>
+                <h4 style="font-size: 14px; margin-top: 20px">边框</h4>
                 <div>
-                  y偏移
+                  颜色
+                  <el-color-picker
+                    v-model="color2"
+                    @change="changeColor1()"
+                    size="large"
+                    style="display: block; margin-bottom: 10px"
+                  ></el-color-picker>粗细
                   <input
                     type="text"
                     style="border-radius: 5px; width: 100px"
-                    v-model="y1"
-                    @change="changeY()"
+                    v-model="borderWidth"
+                    @change="changeWidth()"
                   />
                 </div>
+              </div>
+              <div>
+                <h4 style="font-size: 14px">阴影</h4>
                 <div>
-                  模糊度
-                  <input
-                    type="text"
-                    style="border-radius: 5px; width: 100px"
-                    v-model="blur"
-                    @change="changeBlur()"
-                  />
+                  颜色
+                  <el-color-picker
+                    v-model="color3"
+                    @change="changeColor2()"
+                    size="large"
+                    style="display: block; margin-bottom: 10px"
+                  ></el-color-picker>
+                  <div>
+                    x&nbsp;偏移
+                    <input
+                      type="text"
+                      style="border-radius: 5px; width: 100px"
+                      v-model="x1"
+                      @change="changeX()"
+                    />
+                  </div>
+                  <div>
+                    y&nbsp;偏移
+                    <input
+                      type="text"
+                      style="border-radius: 5px; width: 100px"
+                      v-model="y1"
+                      @change="changeY()"
+                    />
+                  </div>
+                  <div>
+                    模糊度
+                    <input
+                      type="text"
+                      style="border-radius: 5px; width: 100px"
+                      v-model="blur"
+                      @change="changeBlur()"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -230,9 +235,16 @@
   width: 100%;
 }
 .main .a {
+  position: fixed;
+  /* float: left; */
+  /* height: 1000px; */
+  width: 14%;
+  /* background-color: lightgray; */
+}
+.main .aa {
   float: left;
-  height: 1000px;
-  width: 100%;
+  /* height: 1000px; */
+  /* width: 13%; */
   /* background-color: lightgray; */
 }
 .main .b {
@@ -241,10 +253,14 @@
   width: 100%;
   background-color: lightgray;
 }
-.main .c {
+.main .cc {
   float: left;
-  height: 1000px;
+  height: 100%;
+  margin-top: 30px;
   width: 100%;
+}
+.main .cc .c {
+  position: fixed;
 }
 h4 {
   text-align: left;
@@ -268,7 +284,15 @@ h4 {
   border-radius: 4px;
   min-height: 36px;
 }
-
+.header0 {
+  height: 61px;
+  width: 100%;
+}
+.head {
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+}
 #X {
   padding: 5px 0;
   width: 50%;
@@ -278,12 +302,10 @@ h4 {
 }
 
 #container {
-  width: 1000px;
-  height: 1274px;
+  width: 100%;
+  height: 100%;
 }
 </style>
-
-
 
 <script>
 import Konva from "konva";
@@ -310,6 +332,7 @@ export default {
       color: "#FFFFFF",
       color2: "#000",
       color3: "#000",
+
       borderWidth: 1,
       x1: 0,
       y1: 0,
@@ -332,7 +355,6 @@ export default {
       starId: [],
       textId: [],
       tranId: [],
-      textId: [],
       idd: "",
 
       pageId: -1,
@@ -356,7 +378,11 @@ export default {
     destroy(idd) {
       let shape = this.stage.find(idd)[0];
       // console.log(this.numsCircle);
-      shape.destroy();
+      // shape.destroy();
+      shape.move({
+        x: 10000,
+        y: 10000
+      });
     },
     hide(idd) {
       let shape = this.stage.find(idd)[0];
@@ -698,31 +724,6 @@ export default {
       tween.play();
       ////(tween.node.attrs.width);
     },
-    getWord() {
-      //("55");
-
-      var text = new Konva.Text({
-        x: 20,
-        y: 60,
-        text:
-          "COMPLEX TEXT\n\nAll the world's a stage, and all the men and women merely players. They have their exits and their entrances.",
-        fontSize: 38,
-        fontFamily: "Calibri",
-        fill: "#555",
-        width: 300,
-        padding: 20,
-        align: "center",
-        //shadowOffset: { x: 10, y: 10 },
-        stroke: "red",
-        strokeWidth: 1
-      });
-
-      this.layer.add(text);
-
-      // add the layer to the stage
-      this.stage.add(this.layer);
-    },
-
     getStar(
       x,
       y,

@@ -53,6 +53,10 @@
           <!--@后加-->
           <!--按时间倒序待完成-->
         </Row>
+
+        <Row type="flex" align="middle">
+          <el-button type="primary" round @click="back">退出登录</el-button>
+        </Row>
       </Row>
     </Row>
     <Row class="image-list" :gutter="16">
@@ -280,6 +284,13 @@ export default {
         img: this.sendMsg.img
       };
       this.$emit("modify-ok", param);
+    },
+    back: function() {
+      console.log(localStorage.getItem("token"));
+      localStorage.clear();
+      this.$router.push({
+        name: "Login"
+      });
     }
   },
 
