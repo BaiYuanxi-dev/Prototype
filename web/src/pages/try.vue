@@ -359,7 +359,8 @@ export default {
 
       pageId: -1,
       projectId: -1,
-      username: -1
+      username: "",
+      projectName:"",
     };
   },
 
@@ -385,7 +386,8 @@ export default {
         name: "mtpg1",
         query: {
           username: this.username,
-          projectId: this.projectId
+          projectId: this.projectId,
+          projectName: this.projectName,
         }
       });
     },
@@ -1470,6 +1472,7 @@ export default {
       this.pageId = this.$route.query.pageId;
       this.projectId = this.$route.query.projectId;
       this.username = this.$route.query.username;
+      this.projectName = this.$route.query.projectName;
       await this.$store.dispatch("requestLayers", {
         pageId: this.pageId,
         projectId: this.projectId,

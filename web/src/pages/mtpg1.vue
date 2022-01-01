@@ -199,6 +199,7 @@ export default {
           pageId: payload.pageId,
           projectId: this.projectId,
           username: this.username,
+          projectName: this.$route.query.projectName,
         },
       });
     },
