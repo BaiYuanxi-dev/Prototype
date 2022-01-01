@@ -29,7 +29,7 @@ export class UsersController {
         } else {
             state = 'ok';
             token = new tools().tokenSet(payload.username, payload.password);
-            
+
         }
         let params = {
             state: state,
@@ -57,5 +57,5 @@ export class UsersController {
         }
     }
 
-    
+
 }
