@@ -7,9 +7,7 @@ import {
 
 //引入jwt做token验证
 import jwt from "jsonwebtoken";
-import {
-    tools
-} from "../tool";
+import { tools } from "../tool";
 
 //统一设置token有效时间  为了方便观察，设为10s
 const expireTime = '4h';

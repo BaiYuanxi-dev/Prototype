@@ -43,6 +43,7 @@ export class ProjectsController{
     //新建项目
     async createProjects(payload) {
         const newProjects = await Projects.create({
+            username: payload.username, 
             title: payload.title,
             img: payload.img,
             desc:payload.desc,     
