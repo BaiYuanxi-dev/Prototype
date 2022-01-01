@@ -7,14 +7,12 @@ import {
 
 //引入jwt做token验证
 import jwt from "jsonwebtoken";
-import { tools } from "/allprojects/web_class_project/final/prototype-project-16-master/server/src/tool";
+import {
+    tools
+} from "../tool";
 
 //统一设置token有效时间  为了方便观察，设为10s
-<<<<<<< HEAD
-const expireTime = '60h'
-=======
 const expireTime = '4h';
->>>>>>> baiyuanxi
 
 export class UsersController {
     async SignIn(payload) {
@@ -33,7 +31,7 @@ export class UsersController {
         } else {
             state = 'ok';
             token = new tools().tokenSet(payload.username, payload.password);
-            
+
         }
         let params = {
             state: state,
@@ -61,5 +59,5 @@ export class UsersController {
         }
     }
 
-    
+
 }
