@@ -148,18 +148,22 @@ export default new Vuex.Store({
             });
             context.commit('setRegist', value.message);
         },
-        //请求所有project
+
+        /**
+         * 请求所有project
+         * wayoforder：排序方式
+         * value: 服务器返回的值
+         */
         async requestProjects(context, payload) {
-            /**
-             * wayoforder：排序方式
-             * value: 服务器返回的值
-             */
             let value = await reqInstance.post('/projects/getall', {
                 username: payload.username,
                 wayOfOrder: payload.wayOfOrder,
             });
+            console.log(value.message);
             if (value.message == "ok") {
                 context.commit('setProjects', value.data); //设置页面要显示的内容
+            } else {
+                alert("timeout")
             }
         },
 
@@ -172,6 +176,8 @@ export default new Vuex.Store({
             });
             if (addMsg.message == "ok") {
                 context.commit('addData', addMsg.data[0]);
+            } else if (addMsg.message == "timeout1" || addMsg.message == "timeout2") {
+                alert("timeout");
             }
 
         },
