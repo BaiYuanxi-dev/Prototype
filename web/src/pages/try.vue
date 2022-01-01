@@ -342,10 +342,24 @@ export default {
   },
 
   methods: {
-    backToPage() {
-      this.arr = [];
-      this.$store.state.layers = [];
-      this.$router.push({
+    async backToPage() {
+      this.arr = await [];
+      this.$store.state.layers = await [];
+      this.numsRect = await  [];
+      this.numsStar = await  [];
+      this.numsCircle = await  [];
+      this.numsTrangle = await  [];
+      this.rect = await  [];
+      this.star = await  [];
+      this.circle = await  [];
+      this.tragnle = await  [];
+      this.allGraphs = await [];
+      this.rectId = await  [];
+      this.circleId = await  [];
+      this.starId = await [];
+      this.textId = await [];
+      this.tranId = await [];
+      await this.$router.push({
         name: "mtpg1",
         query: {
           username: this.username,
@@ -723,7 +737,7 @@ export default {
       this.stage.add(this.layer);
     },
 
-    getStar(
+    async getStar(
       x,
       y,
       w,
@@ -1460,26 +1474,26 @@ export default {
         projectId: this.projectId,
         username: this.username
       });
-      this.arr = this.$store.state.layers;
-      console.log("arr", this.arr);
+      // this.arr = this.$store.state.layers;
+      // console.log("arr11", this.arr);
       // alert(this.$store.state.layers[0].pageId);
       this.arr = await this.$store.state.layers;
       if (this.arr.length == 0) {
         return;
       }
-      console.log("arr", this.pageId, this.arr);
+      console.log("arr22", this.pageId, this.arr);
       //(this.arr);
-      this.arrId = this.$store.state.ids;
+      this.arrId = await this.$store.state.ids;
       ////(this.arrId);
 
       for (let i = 0; i < this.arrId.length; i++) {
         if (this.arrId[i].indexOf("myRect") == 0) {
-          this.rectId.push(this.arrId[i]);
-          this.numsRect.push(this.arrId[i].slice(6));
+          await this.rectId.push(this.arrId[i]);
+          await this.numsRect.push(this.arrId[i].slice(6));
           console.log("numsRect", this.numsRect);
 
           //(this.numsRect);
-          this.getRectangle(
+          await this.getRectangle(
             this.arr[i].x_co,
             this.arr[i].y_co,
             this.arr[i].width,
@@ -1494,10 +1508,10 @@ export default {
             this.arr[i].layerId
           );
         } else if (this.arrId[i].indexOf("mycircle") == 0) {
-          this.circleId.push(this.arrId[i]);
-          this.numsCircle.push(this.arrId[i].slice(8));
+          await this.circleId.push(this.arrId[i]);
+          await this.numsCircle.push(this.arrId[i].slice(8));
           //(this.numsCircle);
-          this.getCircle(
+          await this.getCircle(
             this.arr[i].x_co,
             this.arr[i].y_co,
             //this.arr[i].width,
@@ -1512,10 +1526,10 @@ export default {
             this.arr[i].layerId
           );
         } else if (this.arrId[i].indexOf("myStar") == 0) {
-          this.starId.push(this.arrId[i]);
-          this.numsStar.push(this.arrId[i].slice(6));
+          await this.starId.push(this.arrId[i]);
+          await this.numsStar.push(this.arrId[i].slice(6));
           //(this.numsStar);
-          this.getStar(
+          await this.getStar(
             this.arr[i].x_co,
             this.arr[i].y_co,
             this.arr[i].width,
@@ -1530,10 +1544,10 @@ export default {
             this.arr[i].layerId
           );
         } else if (this.arrId[i].indexOf("myTrangle") == 0) {
-          this.tranId.push(this.arrId[i]);
-          this.numsTrangle.push(this.arrId[i].slice(9));
+          await this.tranId.push(this.arrId[i]);
+          await this.numsTrangle.push(this.arrId[i].slice(9));
           //(this.numsTrangle);
-          this.getTrangle(
+          await this.getTrangle(
             this.arr[i].x_co,
             this.arr[i].y_co,
             this.arr[i].width,

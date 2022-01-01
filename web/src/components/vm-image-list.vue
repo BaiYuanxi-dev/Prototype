@@ -6,20 +6,10 @@
       <div class="panel-heading" style="font-size: 100px">{{ title }}</div>
       <Row type="flex" align="middle" justify="space-between" class="panel-body">
         <span class="search-bar">
-          <Input placeholder="Please enter ..." v-model="keyword" style="width: 300px"></Input>
-          <Button type="primary" @click="search">搜索</Button>
+          <Input placeholder="Please enter ..." v-model="search" style="width: 300px" @change="searchProject"></Input>
+          <Button type="primary"  >搜索</Button>
         </span>
         <Row type="flex" align="middle" class="page">
-          <span>Show</span>
-          <Input
-            :max="40"
-            :min="1"
-            :number="true"
-            v-model="showNum"
-            class="input-number"
-            @change="changeShowNum"
-          ></Input>
-          <span class="margin-end">/ Page</span>
           <span class="total">Total {{ data.length }}</span>
           <!-- 页码 -->
           <Page
@@ -31,27 +21,13 @@
         </Row>
         <Row type="flex" align="middle">
           <Icon type="md-add-circle" />
-          <!--@后加-->
-          <!-- <div
-            style="font-weight: bold"
-            @click="modalCreate = true"
-            class="select"
-          > 
-                      ＋创建项目
-          </div>-->
           <div style="font-weight: bold" @click="modalCreate = true" class="select">创建项目</div>
           <!--@后加-->
         </Row>
 
         <Row type="flex" align="middle">
           <Icon type="md-arrow-down" />
-          <!--@后加-->
-          <!-- <p style="font-weight: bold" @click="search" class="select">
-            ↓按时间倒序
-          </p>-->
-          <div id="timesort" style="font-weight: bold" @click="sort" class="select">按时间倒序</div>
-          <!--@后加-->
-          <!--按时间倒序待完成-->
+          <div ref="timesort" style="font-weight: bold" @click="sort" class="select">{{sortWay}}</div>
         </Row>
       </Row>
     </Row>
@@ -132,8 +108,9 @@ export default {
   },
   data: function() {
     return {
+      // search:"",
       userId: "",
-      keyword: "", // keyword for search
+      search: "", // keyword for search
       dataShow: [], // data for showing
       showNum: 8, // number of item per page
       currentPage: 1,
@@ -149,7 +126,8 @@ export default {
         img: ""
       },
       wayOfOrder: 1,
-      imgUrl: ""
+      imgUrl: "",
+      sortWay:"按时间排序",
     };
   },
   computed: {
@@ -160,97 +138,47 @@ export default {
   methods: {
     //添加项目时上传图片
     async upload(event) {
-      //@后加
       let files = event.target.files[0];
-      // console.log(files.name);
-      // this.fileName = this.getObjectUrl(files);
-      // let filess = new window.File([this.fileName], files.name, {
-      //   type: files.type,
-      // });
-      // this.imgUrl = filess;
-      // this.imgUrl = files.name;
       this.imgUrl = await uploadFile(files);
     },
 
-    getObjectUrl(file) {
-      //@后加
-      let url = null;
-      if (window.createObjectURL != undefined) {
-        // basic
-        url = window.createObjectURL(file);
-      } else if (window.webkitURL != undefined) {
-        // webkit or chrome
-        url = window.webkitURL.createObjectURL(file);
-      } else if (window.URL != undefined) {
-        // mozilla(firefox)
-        url = window.URL.createObjectURL(file);
-      }
-      return url;
-    },
     sort: function() {
       //@后加
-      let div = document.querySelector("#timesort");
-      if (div.textContent == "按时间倒序") {
-        div.textContent = "按标题排序";
-        this.wayOfOrder = 2;
-        // this.$store.dispatch("requestProjects", {
-        //   wayOfOrder: this.wayOfOrder,
-        // });
+      let div = this.$refs.timesort.innerHTML;
+      if (div == "按时间排序") {
+        this.sortWay = "按标题排序";
+        this.wayOfOrder = 1;
         this.$emit("reload", this.wayOfOrder);
       } else {
-        div.textContent = "按时间倒序";
-        this.wayOfOrder = 1;
-        // this.$store.dispatch("requestProjects", {
-        //   wayOfOrder: this.wayOfOrder,
-        // });
+        this.sortWay = "按时间排序";
+        this.wayOfOrder = 2;
         this.$emit("reload", this.wayOfOrder);
       }
     },
 
-    getObjectURL(file) {
-      let url = null;
-      if (window.createObjectURL != undefined) {
-        // basic
-        url = window.createObjectURL(file);
-      } else if (window.webkitURL != undefined) {
-        // webkit or chrome
-        url = window.webkitURL.createObjectURL(file);
-      } else if (window.URL != undefined) {
-        // mozilla(firefox)
-        url = window.URL.createObjectURL(file);
-      }
-      return url;
-    },
-    changeShowNum() {
-      this.updateDataShow();
-    },
-    //在这里要向服务器发送信息：并获得返回的项目信息
-    async updateDataShow() {
-      await this.$store.dispatch("requestProjects", this.wayOfOrder);
-      let startPage = (this.currentPage - 1) * this.showNum;
-      let endPage = startPage + this.showNum;
-      this.dataShow = this.data.slice(startPage, endPage);
-    },
     pageChange: function(page) {
       this.currentPage = page;
       this.updateDataShow();
     },
-    search: function() {
-      let that = this;
-      let tempData = that.data;
-      that.dataShow = [];
-      tempData.forEach(function(elem) {
-        for (let i in elem) {
-          if (elem[i].toString().indexOf(that.keyword) > -1) {
-            that.dataShow.push(elem);
-            return;
+    searchProject: function() {
+      console.log("??", this.search);
+      if(this.search == ""){
+        this.dataShow = this.data.slice(0, this.showNum);
+      }else {
+        this.dataShow = [];
+        for(let i = 0; i < this.data.length; i ++){
+          if(this.data[i].title.indexOf(this.search) > -1){
+            this.dataShow.push(this.data[i]);
           }
         }
-      });
+
+      }
+
     },
 
     async CreateOk(data) {
       let param = {
+        username: this.username,
         title: this.addMsg.title,
         desc: this.addMsg.desc,
         wayOfOrder: this.wayOfOrder,
@@ -273,6 +201,7 @@ export default {
       this.sendMsg.img = data.img;
     },
     modifyandsend: function(item) {
+
       let param = {
         id: item.id,
         title: this.sendMsg.title,
@@ -288,15 +217,20 @@ export default {
       this.dataShow = this.data.slice(0, this.showNum); // update dataShow once data changed
       // console.log(this.dataShow);
     },
+    datashow: function(){
+      
+    },
+    showNum: function(){
+      if(this.showNum == ''){
+        this.showNum = this.data.length;
+      }
+    },
     username: function() {
       this.userId = this.username;
-      console.log("coamae", this.userId);
     }
   },
   mounted: function() {
     this.dataShow = this.data.slice(0, this.showNum);
-    // for(var i = 0; i < ; )
-    // this.currentPage =
   }
 };
 </script>

@@ -43,7 +43,11 @@ export default {
   },
   methods: {
       handleCancel() {
-        this.$emit('close', param);
+        let param = {
+          // username: this.username,
+          projectId: this.projectId,
+        }
+        this.$emit('close', this.initForm);
       },
       async handleSubmit() {
         await this.$store.dispatch('addPages', this.initForm);

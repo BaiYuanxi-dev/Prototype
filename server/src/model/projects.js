@@ -23,4 +23,8 @@ export const Projects = dbInstance.define('projects', {
         name: 'desc',
         type: sequelize.DataTypes.STRING
     },
+    username: {
+        name: 'username',
+        type: sequelize.DataTypes.STRING,
+    }
 }, );

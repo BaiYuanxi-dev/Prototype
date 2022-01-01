@@ -10,9 +10,7 @@
       <img :src="img" alt="" />
       <div v-if="editable && type == 'vertical'" class="control">
         <span class="edit">
-          <a :href="editUrl">
             <Icon type="md-create" @click="modalModify = true" />
-          </a>
         </span>
         <span class="delete">
           <Icon type="ios-trash" @click="modalDelete = true" />
@@ -166,6 +164,7 @@ export default {
         name: 'mtpg1',
         query:{
           //页面跳转参数：页面id
+          projectName: this.title,
           username: this.username,
           projectId:this.id,
         }
@@ -182,6 +181,9 @@ export default {
     username:function(){
       // console.log("???")
       console.log("username", this.username);
+    },
+    title: function(){
+      console.log("title", this.title);
     }
   },
   mounted(){
