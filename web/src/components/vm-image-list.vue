@@ -6,8 +6,8 @@
       <div class="panel-heading" style="font-size: 100px">{{ title }}</div>
       <Row type="flex" align="middle" justify="space-between" class="panel-body">
         <span class="search-bar">
-          <Input placeholder="Please enter ..." v-model="search" style="width: 300px" @change="searchProject"></Input>
-          <Button type="primary"  >搜索</Button>
+          <Input placeholder="Please enter ..." v-model="search" style="width: 300px" ></Input>
+          <Button type="primary" @click="searchProject" >搜索</Button>
         </span>
         <Row type="flex" align="middle" class="page">
           <span class="total">Total {{ data.length }}</span>

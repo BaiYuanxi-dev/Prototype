@@ -176,8 +176,9 @@ export default {
           //页面跳转参数：页面id
           pageId: payload.pageId,
           projectId: this.projectId,
-          username: this.username
-        }
+          username: this.username,
+          projectName: this.$route.query.projectName,
+        },
       });
     },
 
