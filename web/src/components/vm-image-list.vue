@@ -3,21 +3,10 @@
   <div class="vm-image-list">
     <!-- 页面顶部 -->
     <Row class="image-list-heading vm-panel">
-      <div class="panel-heading" style="font-size: 100px">
-        {{ title }}
-      </div>
-      <Row
-        type="flex"
-        align="middle"
-        justify="space-between"
-        class="panel-body"
-      >
+      <div class="panel-heading" style="font-size: 100px">{{ title }}</div>
+      <Row type="flex" align="middle" justify="space-between" class="panel-body">
         <span class="search-bar">
-          <Input
-            placeholder="Please enter ..."
-            v-model="keyword"
-            style="width: 300px"
-          ></Input>
+          <Input placeholder="Please enter ..." v-model="keyword" style="width: 300px"></Input>
           <Button type="primary" @click="search">搜索</Button>
         </span>
         <Row type="flex" align="middle" class="page">
@@ -41,7 +30,8 @@
           ></Page>
         </Row>
         <Row type="flex" align="middle">
-          <Icon type="md-add-circle" /><!--@后加-->
+          <Icon type="md-add-circle" />
+          <!--@后加-->
           <!-- <div
             style="font-weight: bold"
             @click="modalCreate = true"
@@ -49,42 +39,24 @@
           > 
                       ＋创建项目
           </div>-->
-          <div
-            style="font-weight: bold"
-            @click="modalCreate = true"
-            class="select"
-          >
-            创建项目
-          </div>
+          <div style="font-weight: bold" @click="modalCreate = true" class="select">创建项目</div>
           <!--@后加-->
         </Row>
 
         <Row type="flex" align="middle">
-          <Icon type="md-arrow-down" /><!--@后加-->
+          <Icon type="md-arrow-down" />
+          <!--@后加-->
           <!-- <p style="font-weight: bold" @click="search" class="select">
             ↓按时间倒序
-          </p> -->
-          <div
-            id="timesort"
-            style="font-weight: bold"
-            @click="sort"
-            class="select"
-          >
-            按时间倒序
-          </div>
+          </p>-->
+          <div id="timesort" style="font-weight: bold" @click="sort" class="select">按时间倒序</div>
           <!--@后加-->
           <!--按时间倒序待完成-->
         </Row>
       </Row>
     </Row>
     <Row class="image-list" :gutter="16">
-      <Col
-        :lg="6"
-        :sm="12"
-        class="vm-margin"
-        v-for="item in dataShow"
-        :key="item.id"
-      >
+      <Col :lg="6" :sm="12" class="vm-margin" v-for="item in dataShow" :key="item.id">
         <VmCard
           :username="userId"
           ref="child"
@@ -103,39 +75,20 @@
     </Row>
 
     <!-- 需要用户处理事务，又不希望跳转页面以致打断工作流程时，可以使用 Modal 在当前页面正中打开一个浮层，承载相应的操作。 -->
-    <Modal
-      v-model="modalCreate"
-      title="添加项目"
-      ok-text="确定"
-      cancel-text="取消"
-      v-on:on-ok="CreateOk"
-    >
+    <Modal v-model="modalCreate" title="添加项目" ok-text="确定" cancel-text="取消" v-on:on-ok="CreateOk">
       <div style="margin: 20px">
         项目名称：
-        <Input
-          v-model="addMsg.title"
-          placeholder="Please enter ..."
-          style="width: 300px"
-        ></Input>
+        <Input v-model="addMsg.title" placeholder="Please enter ..." style="width: 300px"></Input>
       </div>
       <div style="margin: 20px">
         项目简介：
-        <Input
-          v-model="addMsg.desc"
-          placeholder="Please enter ..."
-          style="width: 300px"
-        ></Input>
+        <Input v-model="addMsg.desc" placeholder="Please enter ..." style="width: 300px"></Input>
       </div>
       <div style="margin: 20px">
         项目封面：
         <label type="button" class="upbtn">
           <div>上传封面</div>
-          <input
-            id="files"
-            type="file"
-            class="change"
-            @change.prevent.stop="upload"
-          />
+          <input id="files" type="file" class="change" @change.prevent.stop="upload" />
         </label>
       </div>
     </Modal>
@@ -148,37 +101,38 @@ import { uploadFile } from "../utils/upload.js";
 export default {
   name: "VmImageList",
   components: {
-    VmCard,
+    VmCard
   },
   props: {
-    username:{
-      type:String,
-      default: "1@qq.com",
+    username: {
+      type: String,
+      default: "1@qq.com"
     },
     title: {
       type: String,
-      default: "Welcome to my prototype tool!",
+      default: "Welcome to my prototype tool!"
     },
     // origin data
     data: {
       type: Array,
-      default: function () {
+      default: function() {
         return [
           {
             id: "19920805",
             title: "Title",
             createdAt: "new Date()",
             img: require("@/assets/img/img-1.jpg"),
-            desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry,Lorem Ipsum has been the industry's standard dummy text ever since the 1500s ly dummy tly dummy tly dummy tly dummy tly dummy tly dummy t",
-            to: "#",
-          },
+            desc:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry,Lorem Ipsum has been the industry's standard dummy text ever since the 1500s ly dummy tly dummy tly dummy tly dummy tly dummy tly dummy t",
+            to: "#"
+          }
         ];
-      },
-    },
+      }
+    }
   },
-  data: function () {
+  data: function() {
     return {
-      userId:"",
+      userId: "",
       keyword: "", // keyword for search
       dataShow: [], // data for showing
       showNum: 8, // number of item per page
@@ -187,21 +141,21 @@ export default {
       imgDataUrl: "",
       addMsg: {
         title: "",
-        desc: "",
+        desc: ""
       },
       sendMsg: {
         title: "",
         desc: "",
-        img: "",
+        img: ""
       },
       wayOfOrder: 1,
-      imgUrl: "",
+      imgUrl: ""
     };
   },
   computed: {
     projects() {
       return this.$store.state.projects;
-    },
+    }
   },
   methods: {
     //添加项目时上传图片
@@ -233,7 +187,7 @@ export default {
       }
       return url;
     },
-    sort: function () {
+    sort: function() {
       //@后加
       let div = document.querySelector("#timesort");
       if (div.textContent == "按时间倒序") {
@@ -277,15 +231,15 @@ export default {
       let endPage = startPage + this.showNum;
       this.dataShow = this.data.slice(startPage, endPage);
     },
-    pageChange: function (page) {
+    pageChange: function(page) {
       this.currentPage = page;
       this.updateDataShow();
     },
-    search: function () {
+    search: function() {
       let that = this;
       let tempData = that.data;
       that.dataShow = [];
-      tempData.forEach(function (elem) {
+      tempData.forEach(function(elem) {
         for (let i in elem) {
           if (elem[i].toString().indexOf(that.keyword) > -1) {
             that.dataShow.push(elem);
@@ -300,7 +254,7 @@ export default {
         title: this.addMsg.title,
         desc: this.addMsg.desc,
         wayOfOrder: this.wayOfOrder,
-        img: this.imgUrl,
+        img: this.imgUrl
       };
       await this.$store.dispatch("addProjects", param);
 
@@ -309,40 +263,40 @@ export default {
       //创建成功后，后端应该返回更新的数据：更新dataList
     },
 
-    deleteOk: function (data) {
+    deleteOk: function(data) {
       this.$emit("delete-ok", data);
     },
-    modifyOk: function (data) {
+    modifyOk: function(data) {
       // this.$emit('modify-ok',data)
       this.sendMsg.title = data.title;
       this.sendMsg.desc = data.desc;
       this.sendMsg.img = data.img;
     },
-    modifyandsend: function (item) {
+    modifyandsend: function(item) {
       let param = {
         id: item.id,
         title: this.sendMsg.title,
         desc: this.sendMsg.desc,
-        img: this.sendMsg.img,
+        img: this.sendMsg.img
       };
       this.$emit("modify-ok", param);
-    },
+    }
   },
 
   watch: {
-    data: function () {
+    data: function() {
       this.dataShow = this.data.slice(0, this.showNum); // update dataShow once data changed
       // console.log(this.dataShow);
     },
-    username:function(){
+    username: function() {
       this.userId = this.username;
-      console.log("coamae",this.userId);
+      console.log("coamae", this.userId);
     }
   },
-  mounted: function () {
+  mounted: function() {
     this.dataShow = this.data.slice(0, this.showNum);
     // for(var i = 0; i < ; )
     // this.currentPage =
-  },
+  }
 };
 </script>

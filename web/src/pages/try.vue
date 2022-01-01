@@ -79,7 +79,7 @@
               )
             "
           >星形</el-menu-item>
-          <el-menu-item index="2-5">文字</el-menu-item>
+          <el-menu-item index="2-5" @click="getWord()">文字</el-menu-item>
         </el-submenu>
 
         <el-menu-item index="3">
@@ -92,8 +92,8 @@
       </el-menu>
     </div>
     <div class="main">
-      <el-row :gutter="10">
-        <el-col :xs="4" :sm="4" :md="3" :lg="3" :xl="1" class="hidden-md-and-down">
+      <Row :gutter="16">
+        <Col :xs="4" :sm="4" :md="3" :lg="5" :xl="3" class="hidden-md-and-down">
           <div class="a">
             <el-col :span="12">
               <layers
@@ -108,13 +108,13 @@
               ></layers>
             </el-col>
           </div>
-        </el-col>
-        <el-col :xs="18" :sm="20" :md="21" :lg="18" :xl="22">
+        </Col>
+        <Col :xs="18" :sm="20" :md="20" :lg="20" :xl="18">
           <div class="b">
             <div id="container" ref="container" class="container" />
           </div>
-        </el-col>
-        <el-col :xs="6" :sm="4" :md="3" :lg="3" :xl="1">
+        </Col>
+        <Col :xs="6" :sm="4" :md="4" :lg="4" :xl="3">
           <div class="c">
             <div>
               <h4 style="font-size: 14px">参数</h4>
@@ -214,8 +214,8 @@
               </div>
             </div>
           </div>
-        </el-col>
-      </el-row>
+        </Col>
+      </Row>
     </div>
   </div>
 </template>
@@ -807,7 +807,7 @@ export default {
         id: sum,
         type: "star",
         count: parseInt(this.numsStar.length),
-        ran: this.numsStar[num]
+        ran: this.numsStar[this.numsStar.length - 1]
       };
       this.arrLayer.push(params);
 
@@ -982,14 +982,15 @@ export default {
         this.numsText.length;
       //("rect");
       //(sum);
+      // console.log("num", num);
       let params = {
         id: sum,
         type: "rectangle",
         count: parseInt(this.numsRect.length),
 
-        ran: this.numsRect[num]
+        ran: this.numsRect[this.numsRect.length - 1]
       };
-      // console.log("sum", params.id);
+      // console.log("test", params);
       this.arrLayer.push(params);
 
       this.$refs.layers._data.numItem++;
@@ -1165,7 +1166,7 @@ export default {
         id: sum,
         type: "circular",
         count: parseInt(this.numsCircle.length),
-        ran: this.numsCircle[num - 1]
+        ran: this.numsCircle[this.numsCircle.length - 1]
       };
       this.arrLayer.push(params);
       this.$refs.layers._data.numItem++;
@@ -1352,7 +1353,7 @@ export default {
         type: "triangle",
         count: parseInt(this.numsTrangle.length),
 
-        ran: this.numsTrangle[num - 1]
+        ran: this.numsTrangle[this.numsTrangle.length - 1]
       };
       this.arrLayer.push(params);
       this.$refs.layers._data.numItem++;
@@ -1475,6 +1476,7 @@ export default {
         if (this.arrId[i].indexOf("myRect") == 0) {
           this.rectId.push(this.arrId[i]);
           this.numsRect.push(this.arrId[i].slice(6));
+          console.log("numsRect", this.numsRect);
 
           //(this.numsRect);
           this.getRectangle(

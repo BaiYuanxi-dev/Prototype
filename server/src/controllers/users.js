@@ -16,7 +16,7 @@ import {
 // const tools = require('../public/tool')
 
 //统一设置token有效时间  为了方便观察，设为10s
-const expireTime = '10s'
+const expireTime = '60h'
 
 export class UsersController {
     async SignIn(payload) {

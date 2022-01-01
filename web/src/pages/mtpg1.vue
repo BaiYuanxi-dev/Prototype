@@ -1,12 +1,10 @@
 <template>
   <div class="page">
     <!--面包屑导航区域-->
-    <el-breadcrumb separator-class="el-icon-arrow-right" class="">
-      <el-breadcrumb-item
-        ><button @click="beforePage" class="noborder">
-          {{ title }}
-        </button></el-breadcrumb-item
-      >
+    <el-breadcrumb separator-class="el-icon-arrow-right" class>
+      <el-breadcrumb-item>
+        <button @click="beforePage" class="noborder">{{ title }}</button>
+      </el-breadcrumb-item>
       <el-breadcrumb-item>页面管理</el-breadcrumb-item>
     </el-breadcrumb>
     <!--卡片视图区域-->
@@ -14,11 +12,8 @@
       <el-row :gutter="20">
         <el-col :span="6">
           <!--搜索区域-->
-          <el-input v-model="search" placeholder="页码" >
-            <i
-              slot="append"
-              class="el-icon-search"
-            ></i>
+          <el-input v-model="search" placeholder="页码">
+            <i slot="append" class="el-icon-search"></i>
           </el-input>
         </el-col>
         <el-col :span="4">
@@ -26,16 +21,8 @@
         </el-col>
       </el-row>
     </el-card>
-    <addBaseModel
-      v-if="addModalDisplay"
-      :form="addForm"
-      @close="hideAddModal"
-    />
-    <update-base-modal
-      v-if="updateModalDisplay"
-      :form="updatedForm"
-      @close="hideUpdateModal"
-    />
+    <addBaseModel v-if="addModalDisplay" :form="addForm" @close="hideAddModal" />
+    <update-base-modal v-if="updateModalDisplay" :form="updatedForm" @close="hideUpdateModal" />
 
     <el-table
       :data="
@@ -52,26 +39,9 @@
       <el-table-column label="更新时间" prop="updatedAt" />
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button
-            type="primary"
-            icon="el-icon-edit"
-            @click="updatePage(scope.row)"
-            circle
-          >
-          </el-button>
-          <el-button
-            type="danger"
-            icon="el-icon-delete"
-            @click="deletePage(scope.row)"
-            circle
-          >
-          </el-button>
-          <el-button
-            type="info"
-            icon="el-icon-message"
-            circle
-            @click="toLayer(scope.row)"
-          ></el-button>
+          <el-button type="primary" icon="el-icon-edit" @click="updatePage(scope.row)" circle></el-button>
+          <el-button type="danger" icon="el-icon-delete" @click="deletePage(scope.row)" circle></el-button>
+          <el-button type="info" icon="el-icon-message" circle @click="toLayer(scope.row)"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -84,8 +54,7 @@
       :pager-count="page.count"
       :current-page.sync="page.current"
       :total="pages.length"
-    >
-    </el-pagination>
+    ></el-pagination>
   </div>
 </template>
 
@@ -97,18 +66,18 @@ export default {
 
   data() {
     return {
-      roleList:[],
+      roleList: [],
       search: "",
       title: "项目",
       updateModalDisplay: false,
       addModalDisplay: false,
       updatedForm: {
         // pageNo:'',
-        pageText: "",
+        pageText: ""
       },
       addForm: {
         pageNo: "",
-        pageText: "",
+        pageText: ""
       },
       pages: [],
       pageNo: "",
@@ -119,8 +88,8 @@ export default {
         size: 7,
         //显示页码个数，超过8页折叠，值范围：[5,21]
         count: 7,
-        current: 1,
-      },
+        current: 1
+      }
     };
   },
   created() {
@@ -132,26 +101,26 @@ export default {
       this.$router.push({
         name: "ImageList",
         query: {
-          username: this.username,
-        },
+          username: this.username
+        }
       });
     },
     getlist() {
       var param = {
         pageindex: this.pageinfo.pageindex,
-        pagesize: this.pageinfo.pagesize,
+        pagesize: this.pageinfo.pagesize
       };
     },
     hideUpdateModal() {
       this.updateModalDisplay = false;
     },
-    hideAddModal: function () {
+    hideAddModal: function() {
       this.addModalDisplay = false;
     },
 
     addPage() {
       this.addForm = {
-        projectId: this.projectId,
+        projectId: this.projectId
       };
       this.addModalDisplay = true;
     },
@@ -159,7 +128,7 @@ export default {
       this.updatedForm = {
         projectId: this.projectId,
         pageId: payload.pageId,
-        pageText: payload.pageText,
+        pageText: payload.pageText
       };
       this.updateModalDisplay = true;
     },
@@ -167,11 +136,11 @@ export default {
     async deletePage(payload) {
       let param = {
         pageId: payload.pageId,
-        projectId: this.projectId,
+        projectId: this.projectId
       };
       try {
         await this.$confirm("确认删除该Page？", "提示", {
-          type: "warning",
+          type: "warning"
         });
         await this.$store.dispatch("deletePage", param);
         //这里应该等后端判断删除成功后才删除。。。
@@ -198,8 +167,8 @@ export default {
           //页面跳转参数：页面id
           pageId: payload.pageId,
           projectId: this.projectId,
-          username: this.username,
-        },
+          username: this.username
+        }
       });
     },
 
@@ -216,21 +185,21 @@ export default {
       let start = (this.page.current - 1) * this.page.size;
       let end = this.page.current * this.page.size;
       this.roleList = this.pages.slice(start, end);
-    },
+    }
   },
 
   watch: {
-    pages: function () {
+    pages: function() {
       this.pages = this.$store.state.pagesList; // update dataShow once data changed
     },
-    search:function(){
+    search: function() {
       console.log(this.roleList);
       console.log(this.search);
     }
   },
   async mounted() {
     this.init();
-  },
+  }
 };
 </script>
 
