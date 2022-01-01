@@ -7,16 +7,14 @@ import {
 
 //引入jwt做token验证
 import jwt from "jsonwebtoken";
-// const jwt = require('jsonwebtoken')
-
-//解析token
-import {
-    tools
-} from "../tool";
-// const tools = require('../public/tool')
+import { tools } from "/allprojects/web_class_project/final/prototype-project-16-master/server/src/tool";
 
 //统一设置token有效时间  为了方便观察，设为10s
+<<<<<<< HEAD
 const expireTime = '60h'
+=======
+const expireTime = '4h';
+>>>>>>> baiyuanxi
 
 export class UsersController {
     async SignIn(payload) {
@@ -34,34 +32,13 @@ export class UsersController {
             state = 'wrong password';
         } else {
             state = 'ok';
-            token = jwt.sign({
-                user: payload.username,
-                passWord: payload.password
-            }, '123456', {
-                expiresIn: expireTime
-            });
+            token = new tools().tokenSet(payload.username, payload.password);
+            
         }
         let params = {
             state: state,
             token: token,
         }
-
-        // const token = jwt.sign({ id: payload.username }, config.secret, {
-        //     expiresIn: 60, // 24 hours
-        //   });
-
-        //   let authorities = [];
-        //   const roles = await user.getRoles();
-        //   for (let i = 0; i < roles.length; i++) {
-        //     authorities.push("ROLE_" + roles[i].name.toUpperCase());
-        //   }
-
-        //   req.session.token = token;
-
-        //   let params = {
-        //     state: state,
-        //     token: token,
-        // }
         return params;
     }
 
@@ -83,4 +60,6 @@ export class UsersController {
             return false
         }
     }
+
+    
 }

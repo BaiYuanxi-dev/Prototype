@@ -1,14 +1,29 @@
-// const getToken = require('jsonwebtoken')
+import jwt from "jsonwebtoken"
 
-import getToken from "jsonwebtoken"
 
-async function tools(token) {
-    return new Promise((resolve, rejece) => {
-        const info = getToken.verify(token.split(' ')[1], "123456");
-        resolve(info);
-    })
-}
+const expireTime = '30s';
+export class tools {
+    tokenSet(username, password){
+        const token = jwt.sign({
+            user: username,
+            passWord: password
+        }, '123456', {
+            expiresIn: expireTime,
+            algorithm: 'HS256',
+        });
+        return token;
 
-export {
-    tools
+    }
+
+    //成功返回message，失败抛出异常
+    verToken(token){
+        const decoded = jwt.decode(token, {complete: true});
+        const nowtime = Date.parse(new Date())/1000;
+        if(nowtime >= decoded.payload.exp){
+            throw("timeout1");
+        }
+        return decoded.payload.user;
+
+    }
+    
 }
