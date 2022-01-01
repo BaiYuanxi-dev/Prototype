@@ -49,7 +49,7 @@ export default {
       async handleSubmit() {
         //TDDO
         await this.$store.dispatch('updatePage', this.initForm);
-        this.$emit('close');
+        this.$emit('close', {param: this.initForm});
       }
   },
   mounted() {

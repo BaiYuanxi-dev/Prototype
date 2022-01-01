@@ -68,6 +68,7 @@ export default {
     reloadfn: function (data) {
       this.$store.dispatch("requestProjects", {
         wayOfOrder: data,
+        username: this.username,
       });
       this.dataImageList = this.$store.state.dataImageList;
     },

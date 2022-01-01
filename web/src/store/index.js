@@ -108,7 +108,18 @@ export default new Vuex.Store({
             }
             state.pagesList.push(value);
         },
+
         changePage(state, value) {
+            if (value.createdAt == null) {
+                value.createdAt = "时间未记录"
+            } else {
+                value.createdAt = moment(value.createdAt).format('YYYY-MM-DD HH:mm:ss')
+            }
+            if (value.updatedAt == null) {
+                value.updatedAt = "时间未记录"
+            } else {
+                value.updatedAt = moment(value.updatedAt).format('YYYY-MM-DD HH:mm:ss')
+            }
             for (let i = 0; i < state.pagesList.length; i++) {
                 if (state.pagesList[i].pageId == value.pageId) {
                     state.pagesList.splice(i, 1, value);
@@ -159,7 +170,7 @@ export default new Vuex.Store({
                 username: payload.username,
                 wayOfOrder: payload.wayOfOrder,
             });
-            console.log(value.message);
+            // console.log(value.message);
             if (value.message == "ok") {
                 context.commit('setProjects', value.data); //设置页面要显示的内容
             } else {
@@ -170,6 +181,7 @@ export default new Vuex.Store({
         /**增加project */
         async addProjects(context, payload) {
             let addMsg = await reqInstance.post('/projects', {
+                username: payload.username,
                 title: payload.title,
                 desc: payload.desc,
                 img: payload.img
@@ -236,7 +248,7 @@ export default new Vuex.Store({
 
         },
         async deletePage(context, payload) {
-            console.log("delete", payload.pageId, payload.projectId);
+            // console.log("delete", payload.pageId, payload.projectId);
             const value = await reqInstance.post(`/pages/deletePage`, {
                 pageId: payload.pageId,
                 projectId: payload.projectId,
