@@ -1,5 +1,19 @@
 <template>
   <div class="signcontainer">
+    <Row :gutter="16">
+      <Col :xs="8" :sm="8" :md="3" :lg="5" :xl="3">
+        <el-dialog :visible.sync="dialogVisible" height="480" :before-close="handleClose">
+          <el-divider />
+          <video id="video" class="test" controls height="480" poster="../assets/img/img-1.jpg">
+            <source src="../assets/video/T20210340_3_00223dc0.mp4" type="video/mp4" />
+          </video>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+          </span>
+        </el-dialog>
+      </Col>
+    </Row>
+
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
       <path
         fill="#0099ff"
@@ -154,6 +168,7 @@ export default {
       }
     };
     return {
+      dialogVisible: true,
       ruleForm: {
         pass: "",
         username: ""
@@ -175,6 +190,12 @@ export default {
     };
   },
   methods: {
+    handleClose() {
+      this.dialogVisible = false;
+      // 关闭弹出框时 视频关闭播放
+      const video = document.getElementById("video");
+      video.pause();
+    },
     isEmail(s) {
       return /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/.test(
         s
@@ -548,6 +569,9 @@ svg {
 }
 
 .btn-3 span:hover:after {
+  width: 100%;
+}
+.test {
   width: 100%;
 }
 </style>

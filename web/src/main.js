@@ -10,8 +10,6 @@ import 'element-ui/lib/theme-chalk/index.css';
 import VueKonva from 'vue-konva'
 import "./assets/all.css"
 import "element-ui/lib/theme-chalk/display.css";
-// import axios from 'axios'
-
 
 Vue.use(VueKonva)
 Vue.use(ElementUI);
@@ -24,4 +22,3 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
-
