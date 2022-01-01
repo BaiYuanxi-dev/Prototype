@@ -1,14 +1,16 @@
 import KoaRouter from 'koa-router';
-import {UsersController} from '../controllers/users';
+import {
+    UsersController
+} from '../controllers/users';
 const userRoute = new KoaRouter({
     prefix: '/api/sign'
 });
 
-userRoute.post('/login', async function(ctx){
+userRoute.post('/login', async function (ctx) {
     const payload = ctx.request.body;
     const params = await new UsersController().SignIn(payload);
-    ctx.body={
-        data: params.token,
+    ctx.body = {
+        data: params,
         message: params.state,
     }
     // if(state.length == 0){
@@ -26,19 +28,19 @@ userRoute.post('/login', async function(ctx){
     // }
 });
 
-userRoute.post('/regist', async function(ctx){
+userRoute.post('/regist', async function (ctx) {
     const payload = ctx.request.body;
     const state = await new UsersController().SignUp(payload);
 
-    if(state){
+    if (state) {
         ctx.body = {
             data: state,
-            message:'ok',
+            message: 'ok',
         }
-    }  else {
+    } else {
         ctx.body = {
             data: state,
-            message:'exist username',
+            message: 'exist username',
         }
     }
 })

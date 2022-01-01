@@ -207,7 +207,8 @@ export default {
         loginState = this.$store.state.login;
         if (loginState == 200) {
           // alert("登录成功");
-          _this.userToken = "this.params";
+          _this.userToken = this.$store.state.token;
+          console.log(_this.userToken);
           // 将用户token保存到vuex中
           _this.changeLogin({ token: _this.userToken });
           // window.localStorage.setItem("token", _this.userToken); //将token存储到window上

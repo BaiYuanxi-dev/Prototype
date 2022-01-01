@@ -1,5 +1,7 @@
 import sequelize from 'sequelize';
-import { dbInstance } from '../db/config.js';
+import {
+    dbInstance
+} from '../db/config.js';
 
 export const Projects = dbInstance.define('projects', {
     id: {
@@ -17,9 +19,8 @@ export const Projects = dbInstance.define('projects', {
         name: 'img',
         type: sequelize.DataTypes.STRING
     },
-    desc:{
+    desc: {
         name: 'desc',
         type: sequelize.DataTypes.STRING
     },
-},
-);
+}, );

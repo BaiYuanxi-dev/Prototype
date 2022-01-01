@@ -1,5 +1,7 @@
 import KoaRouter from 'koa-router';
-import {ProjectsController} from '../controllers/projects';
+import {
+    ProjectsController
+} from '../controllers/projects';
 const projectRoute = new KoaRouter({
     prefix: '/api/projects'
 });
@@ -15,17 +17,17 @@ const projectRoute = new KoaRouter({
 
 
 //根据发送来的排序方式 返回排序后的数据给前端
-projectRoute.post('/getall', async function(ctx){
+projectRoute.post('/getall', async function (ctx) {
     const payload = ctx.request.body;
     const data = await new ProjectsController().projectsChoose(payload);
     ctx.body = {
         data,
-        message:'ok'
+        message: 'ok'
     };
 });
 
 //新建项目命令
-projectRoute.post('/', async function(ctx) {
+projectRoute.post('/', async function (ctx) {
     const payload = ctx.request.body;
     const id = await new ProjectsController().createProjects(payload);
     ctx.body = {
@@ -35,7 +37,7 @@ projectRoute.post('/', async function(ctx) {
 });
 
 //更新项目数据
-projectRoute.post('/update', async function(ctx) {
+projectRoute.post('/update', async function (ctx) {
     // const id = Number(ctx.params.id);
     const payload = ctx.request.body;
     const id = Number(payload.id)
@@ -55,7 +57,7 @@ projectRoute.post('/update', async function(ctx) {
 
 
 //更新项目正文数据
-projectRoute.post('/updateText', async function(ctx) {
+projectRoute.post('/updateText', async function (ctx) {
     // const id = Number(ctx.params.id);
     const payload = ctx.request.body;
     const id = Number(payload.id)
@@ -75,7 +77,7 @@ projectRoute.post('/updateText', async function(ctx) {
 
 
 //删除
-projectRoute.delete('/:id', async function(ctx) {
+projectRoute.delete('/:id', async function (ctx) {
     const id = Number(ctx.params.id);
     if (isNaN(id)) {
         ctx.statusCode = 400;

@@ -10,17 +10,26 @@ const routes = [{
   {
     path: '/ImageList',
     name: 'ImageList',
-    component: () => import('../pages/ImageList')
+    component: () => import('../pages/ImageList'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/mtpg1',
     name: 'mtpg1',
-    component: () => import('../pages/mtpg1')
+    component: () => import('../pages/mtpg1'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/try',
     name: 'try',
-    component: () => import('../pages/try')
+    component: () => import('../pages/try'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/Login',
@@ -30,8 +39,11 @@ const routes = [{
   {
     path: '/mytable',
     name: 'mytable',
-    component: () => import('../pages/mytable')
-  }
+    component: () => import('../pages/mytable'),
+    meta: {
+      requiresAuth: true
+    }
+  },
 ]
 
 const router = new VueRouter({

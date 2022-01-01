@@ -27,10 +27,14 @@ export default new Vuex.Store({
             localStorage.setItem('token', user.token);
         },
 
-        setLogin(state, message) {
+        setLogin(state, value) {
+            const message = value.message;
 
+            // const token = value.token;
             if (message == "ok") {
                 state.login = 200;
+                state.token = value.data.token;
+                // console.log(state.token);
             } else if (message == "wrong username") {
                 state.login = 401;
             } else if (message == "wrong password") {
@@ -133,8 +137,8 @@ export default new Vuex.Store({
                 username: payload.username,
                 password: payload.password
             });
-
-            context.commit('setLogin', value.message);
+            // console.log(value);
+            context.commit('setLogin', value);
         },
 
         async regist(context, payload) {
