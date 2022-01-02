@@ -223,6 +223,7 @@ export default {
       });
       // console.log(couldSub)
       if (couldSub) {
+        // localStorage.clear();  
         await this.$store.dispatch("login", params);
         let loginState = this.$store.state.login;
         loginState = this.$store.state.login;

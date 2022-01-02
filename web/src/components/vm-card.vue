@@ -179,17 +179,12 @@ export default {
       } 
       // 将修改后的信息发送到服务器，服务器返回成功后将前端信息修改
       // 首先要获得id
-      console.log(this.imgUrl);
+      // console.log(this.imgUrl);
       let param = {
         title: this.modifyMsg.title,
         desc: this.modifyMsg.desc,
         img: this.imgUrl,
       };
-
-      //修改提交到服务器
-      // await this.$store.dispatch('updateProjects', this.modifyMsg);
-
-      //修改成功后将前端界面内容修改
       this.$emit("modify-ok", param);
     },
 
@@ -222,10 +217,10 @@ export default {
   watch: {
     username: function () {
       // console.log("???")
-      console.log("username", this.username);
+      // console.log("username", this.username);
     },
     title: function () {
-      console.log("title", this.title);
+      // console.log("title", this.title);
     },
   },
   mounted() {

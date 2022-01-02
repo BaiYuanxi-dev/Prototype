@@ -165,7 +165,6 @@ export default {
       this.updateDataShow();
     },
     searchProject: function() {
-      console.log("??", this.search);
       if (this.search == "") {
         this.dataShow = this.data.slice(0, this.showNum);
       } else {
@@ -188,7 +187,6 @@ export default {
       };
       await this.$store.dispatch("addProjects", param);
       let token = localStorage.getItem("token");
-      // console.log(token);
       if (token === null || token === "" || token === undefined) {
         this.$router.push({
           name: "Login",
@@ -201,7 +199,6 @@ export default {
 
     deleteOk: function(data) {
       this.$emit("delete-ok", data);
-      console.log("...", this.$store.state.timeout);
       let token = localStorage.getItem("token");
       // console.log(token);
       if (token === null || token === "" || token === undefined) {

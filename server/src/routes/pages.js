@@ -1,6 +1,14 @@
 import KoaRouter from 'koa-router';
-import { PagesController } from '../controllers/pages';
-import { ProjectsController } from '../controllers/projects';
+import {
+    PagesController
+} from '../controllers/pages';
+import {
+    ProjectsController
+} from '../controllers/projects';
+import {
+    tools
+} from "../tool";
+
 const pageRoute = new KoaRouter({
     prefix: '/api/pages'
 });
@@ -9,26 +17,17 @@ const pageRoute = new KoaRouter({
 //初始化：发送项目的页信息
 pageRoute.post('/', async function (ctx) {
     const payload = ctx.request.body;
+    const token = ctx.headers.token;
     const data = await new PagesController().pages(payload.id);
     ctx.body = {
         data,
-        message: 'ok'
+        message: 'ok',
     };
 });
 
 
-//根据
-// pageRoute.post('/getPage', async function(ctx){
-//     const payload = ctx.request.body;
-//     const data = await new PagesController().pagesChoose(payload);
-//     ctx.body = {
-//         data,
-//         message:'ok'
-//     };
-// });
-
 // 新建页， 返回 该项目所有页
-pageRoute.post('/add', async function(ctx) {
+pageRoute.post('/add', async function (ctx) {
     const payload = ctx.request.body;
     const msg = await new PagesController().createPages(payload);
     ctx.body = {
@@ -38,7 +37,7 @@ pageRoute.post('/add', async function(ctx) {
 });
 
 //更新项目数据
-pageRoute.post('/update', async function(ctx) {
+pageRoute.post('/update', async function (ctx) {
     // const id = Number(ctx.params.id);
     const payload = ctx.request.body;
     if (isNaN(payload.pageId)) {
@@ -46,7 +45,7 @@ pageRoute.post('/update', async function(ctx) {
         ctx.body = {
             message: 'id must be number',
         };
-    } else { 
+    } else {
         const data = await new PagesController().updatePages(payload);
         ctx.body = {
             data,
@@ -56,7 +55,7 @@ pageRoute.post('/update', async function(ctx) {
 });
 
 //删除
-pageRoute.post('/deletePage', async function(ctx) {
+pageRoute.post('/deletePage', async function (ctx) {
     const payload = ctx.request.body;
     const id = payload.pageId;
     if (isNaN(id)) {
