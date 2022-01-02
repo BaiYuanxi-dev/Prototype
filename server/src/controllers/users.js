@@ -10,7 +10,7 @@ import jwt from "jsonwebtoken";
 import { tools } from "../tool";
 
 //统一设置token有效时间  为了方便观察，设为10s
-const expireTime = '4h';
+const expireTime = '30s';
 
 export class UsersController {
     async SignIn(payload) {
