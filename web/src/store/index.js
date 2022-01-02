@@ -18,11 +18,8 @@ export default new Vuex.Store({
         try: 0,
         login: 401,
         regist: 401,
-<<<<<<< HEAD
         len: 0,
-=======
         timeout: "ok",
->>>>>>> baiyuanxi
         // 存储token
         token: localStorage.getItem('token') ? localStorage.getItem('token') : ''
     },
