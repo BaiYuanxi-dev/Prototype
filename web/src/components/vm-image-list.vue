@@ -187,7 +187,13 @@ export default {
         img: this.imgUrl
       };
       await this.$store.dispatch("addProjects", param);
-
+      let token = localStorage.getItem("token");
+      // console.log(token);
+      if (token === null || token === "" || token === undefined) {
+        this.$router.push({
+          name: "Login",
+        });
+      } 
       this.$emit("create-ok", this.data);
 
       //创建成功后，后端应该返回更新的数据：更新dataList
@@ -195,12 +201,27 @@ export default {
 
     deleteOk: function(data) {
       this.$emit("delete-ok", data);
+      console.log("...", this.$store.state.timeout);
+      let token = localStorage.getItem("token");
+      // console.log(token);
+      if (token === null || token === "" || token === undefined) {
+        this.$router.push({
+          name: "Login",
+        });
+      } 
     },
     modifyOk: function(data) {
       // this.$emit('modify-ok',data)
       this.sendMsg.title = data.title;
       this.sendMsg.desc = data.desc;
       this.sendMsg.img = data.img;
+      let token = localStorage.getItem("token");
+      // console.log(token);
+      if (token === null || token === "" || token === undefined) {
+        this.$router.push({
+          name: "Login",
+        });
+      } 
     },
     modifyandsend: function(item) {
       let param = {
@@ -210,6 +231,13 @@ export default {
         img: this.sendMsg.img
       };
       this.$emit("modify-ok", param);
+      let token = localStorage.getItem("token");
+      // console.log(token);
+      if (token === null || token === "" || token === undefined) {
+        this.$router.push({
+          name: "Login",
+        });
+      } 
     },
     back: function() {
       // console.log(localStorage.getItem("token"));

@@ -1,5 +1,5 @@
 <template>
-<!-- 自定义card控件：用于增加和修改项目  -->
+  <!-- 自定义card控件：用于增加和修改项目  -->
   <div
     :class="[
       type === 'horizantal' ? 'vm-card-horizantal' : 'vm-card-vertical',
@@ -10,14 +10,14 @@
       <img :src="img" alt="" />
       <div v-if="editable && type == 'vertical'" class="control">
         <span class="edit">
-            <Icon type="md-create" @click="modalModify = true" />
+          <Icon type="md-create" @click="modalModifyclick" />
         </span>
         <span class="delete">
-          <Icon type="ios-trash" @click="modalDelete = true" />
+          <Icon type="ios-trash" @click="modalDeleteclick" />
         </span>
       </div>
     </div>
-    
+
     <div class="card-desc panel-body">
       <h2>{{ title }}</h2>
       <div>{{ createdAt }}</div>
@@ -70,7 +70,7 @@
 </template>
 <script>
 import { formatDate } from "../utils/date.js";
-import { uploadFile } from "../utils/upload.js"
+import { uploadFile } from "../utils/upload.js";
 export default {
   filters: {
     formatDate(time) {
@@ -80,7 +80,7 @@ export default {
   },
   name: "VmCard",
   props: {
-    username:"",
+    username: "",
     id: {
       type: Number,
       default: 1,
@@ -121,7 +121,6 @@ export default {
   },
   data: function () {
     return {
-      
       modalDelete: false,
       modalModify: false,
       modifyMsg: {
@@ -130,18 +129,54 @@ export default {
       },
       fileName: "", //@后加
       imgUrl: "",
-      imgname:"",
+      imgname: "",
     };
   },
 
   methods: {
+    modalDeleteclick() {
+      let token = localStorage.getItem("token");
+      // console.log(token);
+      if (token === null || token === "" || token === undefined) {
+        this.$router.push({
+          name: "Login",
+        });
+      } else {
+        this.modalDelete = true;
+      }
+    },
+    modalModifyclick() {
+      let token = localStorage.getItem("token");
+      // console.log(token);
+      if (token === null || token === "" || token === undefined) {
+        this.$router.push({
+          name: "Login",
+        });
+      } else {
+        this.modalModify = true;
+      }
+    },
     //点击 确认 删除
     deleteOk: function () {
+      let token = localStorage.getItem("token");
+      // console.log(token);
+      if (token === null || token === "" || token === undefined) {
+        this.$router.push({
+          name: "Login",
+        });
+      } 
       this.$emit("delete-ok");
     },
 
     //点击 确认 修改
     modifyOk: function () {
+      let token = localStorage.getItem("token");
+      // console.log(token);
+      if (token === null || token === "" || token === undefined) {
+        this.$router.push({
+          name: "Login",
+        });
+      } 
       // 将修改后的信息发送到服务器，服务器返回成功后将前端信息修改
       // 首先要获得id
       console.log(this.imgUrl);
@@ -160,14 +195,21 @@ export default {
 
     //页面跳转
     move() {
+      let token = localStorage.getItem("token");
+      // console.log(token);
+      if (token === null || token === "" || token === undefined) {
+        this.$router.push({
+          name: "Login",
+        });
+      } 
       this.$router.push({
-        name: 'mtpg1',
-        query:{
+        name: "mtpg1",
+        query: {
           //页面跳转参数：页面id
           projectName: this.title,
           username: this.username,
-          projectId:this.id,
-        }
+          projectId: this.id,
+        },
       });
     },
 
@@ -178,21 +220,19 @@ export default {
   },
 
   watch: {
-    username:function(){
+    username: function () {
       // console.log("???")
       console.log("username", this.username);
     },
-    title: function(){
+    title: function () {
       console.log("title", this.title);
-    }
+    },
   },
-  mounted(){
-    
-    this.modifyMsg.title = this.title; 
+  mounted() {
+    this.modifyMsg.title = this.title;
     this.modifyMsg.desc = this.desc;
     this.imgUrl = this.img;
-    ;
-  }
+  },
 };
 </script>
 
@@ -203,12 +243,12 @@ export default {
   color: #fff;
 }
 
-.card-img{
+.card-img {
   /* width: 410px; */
   height: 236px;
 }
-.card-img img{
+.card-img img {
   width: 100%;
   height: 100%;
-} 
+}
 </style>

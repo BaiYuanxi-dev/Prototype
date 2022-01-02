@@ -18,11 +18,24 @@ export default new Vuex.Store({
         try: 0,
         login: 401,
         regist: 401,
+<<<<<<< HEAD
         len: 0,
+=======
+        timeout: "ok",
+>>>>>>> baiyuanxi
         // 存储token
         token: localStorage.getItem('token') ? localStorage.getItem('token') : ''
     },
     mutations: {
+        timeout(state, message){
+            state.message = message;
+            console.log("message",state.message)
+            if(state.message != "ok"){
+                localStorage.clear();
+            }  
+        },
+
+
         // 修改token，并将token存入localStorage
         changeLogin(state, user) {
             state.token = user.token;
@@ -70,6 +83,16 @@ export default new Vuex.Store({
             }
         },
         addData(state, newData) {
+            if (newData.createdAt == null) {
+                newData.createdAt = "时间未记录"
+            } else {
+                newData.createdAt = moment(newData.createdAt).format('YYYY-MM-DD HH:mm:ss')
+            }
+            if (newData.updatedAt == null) {
+                newData.updatedAt = "时间未记录"
+            } else {
+                newData.updatedAt = moment(newData.updatedAt).format('YYYY-MM-DD HH:mm:ss')
+            }
             state.dataImageList.splice(0, 0, newData);
         },
         changeData(state, changeData) {
@@ -177,9 +200,8 @@ export default new Vuex.Store({
             // console.log(value.message);
             if (value.message == "ok") {
                 context.commit('setProjects', value.data); //设置页面要显示的内容
-            } else {
-                alert("timeout")
-            }
+            } 
+            context.commit('timeout', value.message);
         },
 
         /**增加project */
@@ -192,9 +214,8 @@ export default new Vuex.Store({
             });
             if (addMsg.message == "ok") {
                 context.commit('addData', addMsg.data[0]);
-            } else if (addMsg.message == "timeout1" || addMsg.message == "timeout2") {
-                alert("timeout");
-            }
+            } 
+            context.commit('timeout', addMsg.message);
 
         },
 
@@ -209,11 +230,13 @@ export default new Vuex.Store({
             if (value.message == "ok") {
                 context.commit('changeData', value.data[0]);
             }
+            context.commit('timeout', value.message);
         },
 
         /**删除project */
         async deleteProjects(context, payload) {
-            await reqInstance.delete(`/projects/${payload.id}`);
+            const value = await reqInstance.delete(`/projects/${payload.id}`);
+            context.commit('timeout', value.message);
         },
 
 
