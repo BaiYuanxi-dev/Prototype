@@ -2,6 +2,10 @@ import KoaRouter from 'koa-router';
 import {
     LayersController
 } from '../controllers/layers';
+import {
+    tools
+} from "../tool";
+
 const layerRoute = new KoaRouter({
     prefix: '/api/layers'
 });

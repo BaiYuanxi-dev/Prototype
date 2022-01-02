@@ -397,8 +397,6 @@ export default {
     },
     destroy(idd) {
       let shape = this.stage.find(idd)[0];
-      // console.log(this.numsCircle);
-      // shape.destroy();
       shape.move({
         x: 10000,
         y: 10000

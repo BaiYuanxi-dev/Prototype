@@ -58,7 +58,6 @@ export default {
     modifyfn: function (data) {
       for (let i = 0; i < this.dataImageList.length; i++) {
         if (this.dataImageList[i].id === data.id) {
-          console.log("dataimg", data.img);
           let param = {
             id: data.id,
             title: data.title,

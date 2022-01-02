@@ -1,7 +1,7 @@
-import jwt from "jsonwebtoken"
+import jwt, { decode } from "jsonwebtoken"
 
 
-const expireTime = '30s';
+const expireTime = '80s';
 export class tools {
     tokenSet(username, password){
         const token = jwt.sign({
@@ -19,10 +19,15 @@ export class tools {
     verToken(token){
         const decoded = jwt.decode(token, {complete: true});
         const nowtime = Date.parse(new Date())/1000;
-        if(nowtime >= decoded.payload.exp){
-            throw("timeout1");
+        let param = {
+            message: "",
+            nowtime: nowtime,
+            endtime: decode.exp,
         }
-        return decoded.payload.user;
+        if(nowtime >= decoded.payload.exp){
+            return "timeout";
+        }
+        return "ok";
 
     }
     

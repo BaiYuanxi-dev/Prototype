@@ -26,12 +26,12 @@ export default new Vuex.Store({
     mutations: {
         timeout(state, message){
             state.message = message;
-            console.log("message",state.message)
             if(state.message != "ok"){
                 localStorage.clear();
-            }  
+            }  else {
+                // alert("timeout!");
+            }
         },
-
 
         // 修改token，并将token存入localStorage
         changeLogin(state, user) {
@@ -62,7 +62,6 @@ export default new Vuex.Store({
             }
         },
 
-
         setProjects(state, dataImageList) {
             state.dataImageList = dataImageList;
             for (let i = 0; i < state.dataImageList.length; i++) {
@@ -73,7 +72,11 @@ export default new Vuex.Store({
                 } else {
                     state.dataImageList[i].createdAt = moment(state.dataImageList[i].createdAt).format('YYYY-MM-DD HH:mm:ss')
                 }
-
+                if (state.dataImageList[i].updatedAt == null) {
+                    state.dataImageList[i].updatedAt = "时间未记录"
+                } else {
+                    state.dataImageList[i].updatedAt = moment(state.dataImageList[i].updatedAt).format('YYYY-MM-DD HH:mm:ss')
+                }
                 if (state.dataImageList[i].desc == "") {
                     state.dataImageList[i].desc = "简介"
                 }
@@ -95,6 +98,16 @@ export default new Vuex.Store({
         changeData(state, changeData) {
             for (let i = 0; i < state.dataImageList.length; i++) {
                 if (state.dataImageList[i].id == changeData.id) {
+                    if (changeData.createdAt == null) {
+                        changeData.createdAt = "时间未记录"
+                    } else {
+                        changeData.createdAt = moment(changeData.createdAt).format('YYYY-MM-DD HH:mm:ss')
+                    }
+                    if (changeData.updatedAt == null) {
+                        changeData.updatedAt = "时间未记录"
+                    } else {
+                        changeData.updatedAt = moment(changeData.updatedAt).format('YYYY-MM-DD HH:mm:ss')
+                    }
                     state.dataImageList.splice(i, 1, changeData);
                 }
             }
@@ -130,7 +143,6 @@ export default new Vuex.Store({
             }
             state.pagesList.push(value);
         },
-
         changePage(state, value) {
             if (value.createdAt == null) {
                 value.createdAt = "时间未记录"
@@ -151,19 +163,14 @@ export default new Vuex.Store({
 
 
         async setLayers(state, value) {
-            // state.layers = layers;
-            // console.log(value.ids);
-            // let len = value.length;
             for (let i = 0; i < value.data.length; i++) {
                 await state.layers.push(value.data[i]);
             }
             state.len = value.ids.length;
             for (let i = 0; i < state.len; i++) {
-                // console.log("test", value.ids[i])
+
                 await state.ids.push(value.ids[i].layerId);
             }
-            // await state.try.push(value.ids.length);
-            // console.log(state.ids);
         },
     },
     actions: {
@@ -197,8 +204,8 @@ export default new Vuex.Store({
             // console.log(value.message);
             if (value.message == "ok") {
                 context.commit('setProjects', value.data); //设置页面要显示的内容
-            } 
-            context.commit('timeout', value.message);
+            }
+             
         },
 
         /**增加project */
@@ -212,8 +219,8 @@ export default new Vuex.Store({
             if (addMsg.message == "ok") {
                 context.commit('addData', addMsg.data[0]);
             } 
+            console.log("add pro ",addMsg.message)
             context.commit('timeout', addMsg.message);
-
         },
 
         /**更新project 包括图片，描述，标题 */
@@ -227,15 +234,17 @@ export default new Vuex.Store({
             if (value.message == "ok") {
                 context.commit('changeData', value.data[0]);
             }
-            context.commit('timeout', value.message);
+            console.log("update pro ",value.message)
+            // context.commit('timeout', value.message);
+            
         },
 
         /**删除project */
         async deleteProjects(context, payload) {
             const value = await reqInstance.delete(`/projects/${payload.id}`);
-            context.commit('timeout', value.message);
+            console.log("del pro ",value.message)
+            // context.commit('timeout', value.message);
         },
-
 
 
         /**
@@ -245,11 +254,13 @@ export default new Vuex.Store({
             const value = await reqInstance.post('/pages', {
                 id: payload.id
             });
+            // console.log("message", value.message);
+            // console.log("value", value.data);
             if (value.message == "ok") {
-                context.commit('setPages', value); //设置页面要显示的内容
+                await context.commit('setPages', value); //设置页面要显示的内容
             }
-
         },
+
         async addPages(context, payload) {
             const value = await reqInstance.post('/pages/add', {
                 pageId: payload.pageId,
@@ -259,7 +270,9 @@ export default new Vuex.Store({
             if (value.message == "ok") {
                 context.commit('addPage', value.data[value.data.length - 1]);
             }
+            // context.commit('timeout', value.message);
         },
+        
         async updatePage(context, payload) {
             const value = await reqInstance.post(`/pages/update`, {
                 pageId: payload.pageId,
@@ -269,14 +282,17 @@ export default new Vuex.Store({
             if (value.message == "ok") {
                 context.commit('changePage', value.data[0]);
             }
-
+            // context.commit('timeout', value.message);
         },
+
+        
         async deletePage(context, payload) {
             // console.log("delete", payload.pageId, payload.projectId);
             const value = await reqInstance.post(`/pages/deletePage`, {
                 pageId: payload.pageId,
                 projectId: payload.projectId,
             });
+            // context.commit('timeout', value.message);
         },
 
 
@@ -289,19 +305,24 @@ export default new Vuex.Store({
                 projectId: payload.projectId,
                 username: payload.username,
             });
-            context.commit('setLayers', value);
+            if(value.message == "ok"){
+                context.commit('setLayers', value);
+            }
+            
+            // context.commit('timeout', value.message);
         },
 
 
 
         async addGraph(context, payload) {
-            console.log(payload);
-            await reqInstance.post('/layers/addGraph', {
+            // console.log(payload);
+            let value = await reqInstance.post('/layers/addGraph', {
                 pageId: payload.pageId,
                 projectId: payload.projectId,
                 rect: payload.arr,
                 username: payload.username,
             });
+            // context.commit('timeout', value.message);
         },
 
         async addText(context, payload) {
