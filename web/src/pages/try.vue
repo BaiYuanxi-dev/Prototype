@@ -356,38 +356,42 @@ export default {
       textId: [],
       tranId: [],
       idd: "",
+      test: 0,
 
       pageId: -1,
       projectId: -1,
       username: "",
-      projectName:"",
+      projectName: ""
     };
   },
 
   methods: {
     async backToPage() {
-      this.arr = await [];
-      this.$store.state.layers = await [];
-      this.numsRect = await  [];
-      this.numsStar = await  [];
-      this.numsCircle = await  [];
-      this.numsTrangle = await  [];
-      this.rect = await  [];
-      this.star = await  [];
-      this.circle = await  [];
-      this.tragnle = await  [];
-      this.allGraphs = await [];
-      this.rectId = await  [];
-      this.circleId = await  [];
-      this.starId = await [];
-      this.textId = await [];
-      this.tranId = await [];
+      this.arr = [];
+      this.$store.state.layers = [];
+      this.arrId = [];
+      this.$store.state.ids = [];
+      this.numsRect = [];
+      this.numsStar = [];
+      this.numsCircle = [];
+      this.numsTrangle = [];
+      this.rect = [];
+      this.star = [];
+      this.circle = [];
+      this.tragnle = [];
+      this.allGraphs = [];
+      this.rectId = [];
+      this.circleId = [];
+      this.starId = [];
+      this.textId = [];
+      this.tranId = [];
+      console.log("???", this.numsRect);
       await this.$router.push({
         name: "mtpg1",
         query: {
           username: this.username,
           projectId: this.projectId,
-          projectName: this.projectName,
+          projectName: this.projectName
         }
       });
     },
@@ -1469,6 +1473,7 @@ export default {
     },
 
     async initialLayers() {
+      // console.log("init", this.numsRect);
       this.pageId = this.$route.query.pageId;
       this.projectId = this.$route.query.projectId;
       this.username = this.$route.query.username;
@@ -1485,19 +1490,24 @@ export default {
       if (this.arr.length == 0) {
         return;
       }
-      console.log("arr22", this.pageId, this.arr);
+      // console.log("arr22", this.pageId, this.arr);
       //(this.arr);
       this.arrId = await this.$store.state.ids;
-      ////(this.arrId);
+      // console.log("cjz", this.arrId, this.arrId.length);
+      this.test = await this.$store.state.len;
+      // console.log("emm", this.test);
+      // this.arrId.push(this.$store.state.ids);
+      // console.log("cjz", this.arrId, this.arrId[0]);
 
-      for (let i = 0; i < this.arrId.length; i++) {
+      for (let i = 0; i < this.test; i++) {
         if (this.arrId[i].indexOf("myRect") == 0) {
-          await this.rectId.push(this.arrId[i]);
-          await this.numsRect.push(this.arrId[i].slice(6));
+          console.log("..");
+          this.rectId.push(this.arrId[i]);
+          this.numsRect.push(this.arrId[i].slice(6));
           console.log("numsRect", this.numsRect);
 
           //(this.numsRect);
-          await this.getRectangle(
+          this.getRectangle(
             this.arr[i].x_co,
             this.arr[i].y_co,
             this.arr[i].width,
@@ -1514,7 +1524,7 @@ export default {
         } else if (this.arrId[i].indexOf("mycircle") == 0) {
           await this.circleId.push(this.arrId[i]);
           await this.numsCircle.push(this.arrId[i].slice(8));
-          //(this.numsCircle);
+          console.log("numsCircle", this.numsCircle);
           await this.getCircle(
             this.arr[i].x_co,
             this.arr[i].y_co,
@@ -1532,6 +1542,7 @@ export default {
         } else if (this.arrId[i].indexOf("myStar") == 0) {
           await this.starId.push(this.arrId[i]);
           await this.numsStar.push(this.arrId[i].slice(6));
+          console.log("numsStar", this.numsStar);
           //(this.numsStar);
           await this.getStar(
             this.arr[i].x_co,
@@ -1550,7 +1561,7 @@ export default {
         } else if (this.arrId[i].indexOf("myTrangle") == 0) {
           await this.tranId.push(this.arrId[i]);
           await this.numsTrangle.push(this.arrId[i].slice(9));
-          //(this.numsTrangle);
+          console.log("numsTrangle", this.numsTrangle);
           await this.getTrangle(
             this.arr[i].x_co,
             this.arr[i].y_co,

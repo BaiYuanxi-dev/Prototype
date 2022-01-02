@@ -15,8 +15,10 @@ export default new Vuex.Store({
         pagesList: [],
         layers: [],
         ids: [],
+        try: 0,
         login: 401,
         regist: 401,
+        len: 0,
         // 存储token
         token: localStorage.getItem('token') ? localStorage.getItem('token') : ''
     },
@@ -131,14 +133,16 @@ export default new Vuex.Store({
         async setLayers(state, value) {
             // state.layers = layers;
             // console.log(value.ids);
-            let len = value.data.length;
-            for (let i = 0; i < len; i++) {
+            // let len = value.length;
+            for (let i = 0; i < value.data.length; i++) {
                 await state.layers.push(value.data[i]);
             }
-            len = value.ids.length;
-            for (let i = 0; i < len; i++) {
+            state.len = value.ids.length;
+            for (let i = 0; i < state.len; i++) {
+                // console.log("test", value.ids[i])
                 await state.ids.push(value.ids[i].layerId);
             }
+            // await state.try.push(value.ids.length);
             // console.log(state.ids);
         },
     },

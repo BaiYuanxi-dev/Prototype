@@ -30,7 +30,7 @@
       tooltip-effect="dark"
       stripe
       style="width: 100%"
-      border="true"
+      border
     >
       <el-table-column label="页码" prop="pageId" align="center" sortable />
       <!-- <el-table-column label="页标题" prop="pageName"/> -->
@@ -177,8 +177,8 @@ export default {
           pageId: payload.pageId,
           projectId: this.projectId,
           username: this.username,
-          projectName: this.$route.query.projectName,
-        },
+          projectName: this.$route.query.projectName
+        }
       });
     },
 

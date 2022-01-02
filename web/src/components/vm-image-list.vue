@@ -6,8 +6,8 @@
       <div class="panel-heading" style="font-size: 100px">{{ title }}</div>
       <Row type="flex" align="middle" justify="space-between" class="panel-body">
         <span class="search-bar">
-          <Input placeholder="Please enter ..." v-model="search" style="width: 300px" ></Input>
-          <Button type="primary" @click="searchProject" >搜索</Button>
+          <Input placeholder="Please enter ..." v-model="search" style="width: 300px"></Input>
+          <Button type="primary" @click="searchProject">搜索</Button>
         </span>
         <Row type="flex" align="middle" class="page">
           <span class="total">Total {{ data.length }}</span>
@@ -131,7 +131,7 @@ export default {
       },
       wayOfOrder: 1,
       imgUrl: "",
-      sortWay:"按时间排序",
+      sortWay: "按时间排序"
     };
   },
   computed: {
@@ -166,18 +166,16 @@ export default {
     },
     searchProject: function() {
       console.log("??", this.search);
-      if(this.search == ""){
+      if (this.search == "") {
         this.dataShow = this.data.slice(0, this.showNum);
-      }else {
+      } else {
         this.dataShow = [];
-        for(let i = 0; i < this.data.length; i ++){
-          if(this.data[i].title.indexOf(this.search) > -1){
+        for (let i = 0; i < this.data.length; i++) {
+          if (this.data[i].title.indexOf(this.search) > -1) {
             this.dataShow.push(this.data[i]);
           }
         }
-
       }
-
     },
 
     async CreateOk(data) {
@@ -205,7 +203,6 @@ export default {
       this.sendMsg.img = data.img;
     },
     modifyandsend: function(item) {
-
       let param = {
         id: item.id,
         title: this.sendMsg.title,
@@ -215,7 +212,7 @@ export default {
       this.$emit("modify-ok", param);
     },
     back: function() {
-      console.log(localStorage.getItem("token"));
+      // console.log(localStorage.getItem("token"));
       localStorage.clear();
       this.$router.push({
         name: "Login"
@@ -228,11 +225,9 @@ export default {
       this.dataShow = this.data.slice(0, this.showNum); // update dataShow once data changed
       // console.log(this.dataShow);
     },
-    datashow: function(){
-      
-    },
-    showNum: function(){
-      if(this.showNum == ''){
+    datashow: function() {},
+    showNum: function() {
+      if (this.showNum == "") {
         this.showNum = this.data.length;
       }
     },
