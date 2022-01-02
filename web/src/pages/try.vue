@@ -1490,12 +1490,12 @@ export default {
       if (this.arr.length == 0) {
         return;
       }
-      // console.log("arr22", this.pageId, this.arr);
+      console.log("arr22", this.pageId, this.arr);
       //(this.arr);
       this.arrId = await this.$store.state.ids;
-      // console.log("cjz", this.arrId, this.arrId.length);
+      console.log("cjz", this.arrId, this.arrId.length);
       this.test = await this.$store.state.len;
-      // console.log("emm", this.test);
+      console.log("emm", this.test);
       // this.arrId.push(this.$store.state.ids);
       // console.log("cjz", this.arrId, this.arrId[0]);
 

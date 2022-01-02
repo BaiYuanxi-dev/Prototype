@@ -24,12 +24,12 @@ export default new Vuex.Store({
         token: localStorage.getItem('token') ? localStorage.getItem('token') : ''
     },
     mutations: {
-        timeout(state, message){
+        timeout(state, message) {
             state.message = message;
-            console.log("message",state.message)
-            if(state.message != "ok"){
+            console.log("message1", state.message)
+            if (state.message != "ok") {
                 localStorage.clear();
-            }  
+            }
         },
 
 
@@ -158,6 +158,7 @@ export default new Vuex.Store({
                 await state.layers.push(value.data[i]);
             }
             state.len = value.ids.length;
+            console.log("nmsl", state.len)
             for (let i = 0; i < state.len; i++) {
                 // console.log("test", value.ids[i])
                 await state.ids.push(value.ids[i].layerId);
@@ -197,8 +198,8 @@ export default new Vuex.Store({
             // console.log(value.message);
             if (value.message == "ok") {
                 context.commit('setProjects', value.data); //设置页面要显示的内容
-            } 
-            context.commit('timeout', value.message);
+            }
+            // context.commit('timeout', value.message);
         },
 
         /**增加project */
@@ -211,7 +212,7 @@ export default new Vuex.Store({
             });
             if (addMsg.message == "ok") {
                 context.commit('addData', addMsg.data[0]);
-            } 
+            }
             context.commit('timeout', addMsg.message);
 
         },
@@ -289,7 +290,7 @@ export default new Vuex.Store({
                 projectId: payload.projectId,
                 username: payload.username,
             });
-            context.commit('setLayers', value);
+            await context.commit('setLayers', value);
         },
 
 
