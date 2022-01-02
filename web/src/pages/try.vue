@@ -14,6 +14,7 @@
           <el-submenu index="1">
             <template slot="title">文件</template>
             <el-menu-item index="1-1" @click="save()">保存</el-menu-item>
+            <el-menu-item index="1-2" @click="img_export()">导出</el-menu-item>
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">置入</template>
@@ -683,6 +684,23 @@ export default {
     save() {
       this.addGraph();
     },
+
+    img_export() {
+      var dataURL = this.stage.toDataURL({ pixelRatio: 3 });
+      this.downloadURI(dataURL, "layer.png");
+    },
+
+    downloadURI(uri, name) {
+      var link = document.createElement("a");
+      link.download = name;
+      link.href = uri;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      // delete link;
+      link = null;
+    },
+
     changeX() {
       // //(this.x1 + "x");
 
