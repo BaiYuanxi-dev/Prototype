@@ -82,9 +82,22 @@
         "
             >星形</el-menu-item>
           </el-submenu>
-          <el-menu-item index="3">
-            <a href="#" target="_blank">帮助</a>
-          </el-menu-item>
+          <el-menu-item index="3" @click="dialogVisible = true">帮助</el-menu-item>
+          <el-dialog
+            append-to-body
+            center
+            top="20px"
+            title="提示"
+            :visible.sync="dialogVisible"
+            width="30%"
+          >
+            <span>原型设计网站 author：cjz, byx, zcc, version:@1.0</span>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="dialogVisible = false">取 消</el-button>
+              <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+            </span>
+          </el-dialog>
+
           <el-menu-item index="4">
             <button class="btn_back" @click="backToPage">返回</button>
             <!-- <a href="#" target="_blank">返回</a> -->
@@ -228,6 +241,9 @@
 
 
 <style scoped>
+.dialoghead .el-dialog__body {
+  padding-top: 0;
+}
 .para {
   width: 100%;
   font-size: 15px;
@@ -294,6 +310,10 @@ h4 {
   z-index: 2;
   width: 100%;
 }
+.el-dialog__body span {
+  margin-left: 20px !important;
+  text-align: center !important;
+}
 #X {
   padding: 5px 0;
   width: 50%;
@@ -319,6 +339,7 @@ export default {
 
   data() {
     return {
+      dialogVisible: false,
       arrLayer: [],
       numItem: 0,
 
@@ -504,6 +525,13 @@ export default {
       //(this.idd);
       this.hide(this.idd);
     },
+    // handleClose(done) {
+    // this.$confirm("确认关闭？")
+    // .then(_ => {
+    // done();
+    // })
+    // .catch(_ => {});
+    // },
     async addGraph() {
       ////(this.numsRect);
       for (let i = 0; i < this.numsRect.length; i++) {
